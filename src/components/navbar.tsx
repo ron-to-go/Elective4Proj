@@ -4,15 +4,11 @@ import type { NavId } from "../types/nav";
 
 type NavbarProps = {
   logoSrc?: string;
-  orgText?: string;
-  deptText?: string;
   onNav?: (id: NavId) => void;
 };
 
 export default function Navbar({
   logoSrc = COELogo,
-  orgText = "BULSU COE",
-  deptText = "Department",
   onNav,
 }: NavbarProps) {
   const links = useMemo(
@@ -37,8 +33,6 @@ export default function Navbar({
         >
           <img src={logoSrc} alt="Logo" className="w-10 h-10 object-contain" />
           <div className="leading-tight text-left">
-            <div className="text-sm font-semibold text-gray-900">{orgText}</div>
-            <div className="text-xs text-gray-500">{deptText}</div>
           </div>
         </button>
 
