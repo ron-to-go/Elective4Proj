@@ -44,14 +44,18 @@
     ]
   },
   "laboratories": {
-    "title": "Laboratories",
-    "items": ["Lab 1", "Lab 2", "Lab 3"]
+    "title": "Laboratories and Facilities",
+    "items": [
+      "Thermodynamics and Heat Transfer Laboratory",
+      "Fluid Mechanics and Hydraulics Laboratory",
+      "Machine Design and CAD Laboratory"
+    ]
   },
   "faculty": {
-    "title": "Faculty",
+    "title": "Faculty and Staff",
     "members": [
-      { "name": "Engr. Sample Name", "role": "Department Chair" },
-      { "name": "Engr. Sample Name", "role": "Faculty" }
+      { "name": "Engr. Juan Dela Cruz", "role": "Program Chair" },
+      { "name": "Engr. Maria Santos", "role": "Faculty - Thermal Sciences" }
     ]
   },
   "careers": {
