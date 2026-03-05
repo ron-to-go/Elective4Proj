@@ -21,42 +21,42 @@ Then apply the rules below.
 
 ### `landing/hero`
 Allowed files:
-- `public/data/landing/hero.json`
+- `src/data/landing.ts` (hero block only)
 - `public/` assets used by hero only
 
 ### `landing/mission-vision`
 Allowed files:
-- `public/data/landing/mission-vision.json`
+- `src/data/landing.ts` (missionVision block only)
 - `public/` assets used by mission/vision only
 
 ### `landing/department-grid`
 Allowed files:
-- `public/data/landing/department-grid.json`
+- `src/data/landing.ts` (departmentGrid block only)
 - `public/` assets used by department grid only
 
 ### `landing/news`
 Allowed files:
-- `public/data/landing/news.json`
+- `src/data/landing.ts` (news block only)
 - `public/` assets used by news only
 
 ### `landing/facilities`
 Allowed files:
-- `public/data/landing/facilities.json`
+- `src/data/landing.ts` (facilities block only)
 - `public/` assets used by facilities only
 
 ### `landing/statistics`
 Allowed files:
-- `public/data/landing/statistics.json`
+- `src/data/landing.ts` (statistics block only)
 - `public/` assets used by statistics only
 
 ### `landing/contact`
 Allowed files:
-- `public/data/landing/contact.json`
+- `src/data/landing.ts` (contact block only)
 - `public/` assets used by contact only
 
 ### `landing/footer`
 Allowed files:
-- `public/data/landing/footer.json`
+- `src/data/landing.ts` (footer block only)
 - `public/` assets used by footer only
 
 ### `dept/<CODE>` where `<CODE>` is one of `CE CPE ECE EE IE MFE ME MEE`

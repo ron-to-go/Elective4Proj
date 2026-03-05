@@ -34,16 +34,11 @@ Content is now file-based and shareable via git.
 
 ### Landing content
 
-Each section has one JSON file in `public/data/landing/`:
+Landing content is centralized in one file:
 
-- `hero.json`
-- `mission-vision.json`
-- `department-grid.json`
-- `news.json`
-- `facilities.json`
-- `statistics.json`
-- `contact.json`
-- `footer.json`
+- `src/data/landing.ts`
+
+Each landing branch edits only its own block inside this file.
 
 ### Department content
 

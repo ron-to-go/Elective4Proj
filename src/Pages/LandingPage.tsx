@@ -1,11 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  fetchLandingHeroData,
-  fetchLandingSections,
-  type LandingHeroData,
+  landingPageData,
   type LandingSectionData,
-} from "../lib/landingData";
+} from "../data/landing";
 
 type SectionProps = {
   data: LandingSectionData;
@@ -81,88 +78,8 @@ function SectionCard({ data }: SectionProps) {
   );
 }
 
-function fallbackSection(id: string, title: string): LandingSectionData {
-  return {
-    id,
-    title,
-    assignedGroup: "Assigned group",
-    statusLabel: "RESERVED SECTION",
-  };
-}
-
 export default function LandingPage() {
-  const [hero, setHero] = useState<LandingHeroData | null>(null);
-  const [sections, setSections] = useState<LandingSectionData[]>([]);
-  const [error, setError] = useState<string>("");
-
-  useEffect(() => {
-    let isCancelled = false;
-
-    const load = async () => {
-      try {
-        const [heroData, sectionData] = await Promise.all([
-          fetchLandingHeroData(),
-          fetchLandingSections(),
-        ]);
-
-        if (!isCancelled) {
-          setHero(heroData);
-          setSections(sectionData);
-        }
-      } catch (loadError) {
-        if (!isCancelled) {
-          setError(
-            loadError instanceof Error
-              ? loadError.message
-              : "Failed to load landing content."
-          );
-        }
-      }
-    };
-
-    load();
-
-    return () => {
-      isCancelled = true;
-    };
-  }, []);
-
-  const sectionById = useMemo(() => {
-    const mapping = new Map<string, LandingSectionData>();
-    for (const section of sections) mapping.set(section.id, section);
-    return mapping;
-  }, [sections]);
-
-  if (error) {
-    return (
-      <div className="min-h-screen grid place-items-center px-6 text-center">
-        <p className="text-sm text-red-700">{error}</p>
-      </div>
-    );
-  }
-
-  if (!hero) {
-    return (
-      <div className="min-h-screen grid place-items-center px-6 text-center">
-        <p className="text-sm text-gray-600">Loading landing page...</p>
-      </div>
-    );
-  }
-
-  const missionVision =
-    sectionById.get("mission-vision") ||
-    fallbackSection("mission-vision", "Mission & Vision");
-  const departmentGrid =
-    sectionById.get("department-grid") ||
-    fallbackSection("department-grid", "Department Grid");
-  const news = sectionById.get("news") || fallbackSection("news", "News");
-  const facilities =
-    sectionById.get("facilities") || fallbackSection("facilities", "Facilities");
-  const statistics =
-    sectionById.get("statistics") || fallbackSection("statistics", "Statistics");
-  const contact =
-    sectionById.get("contact") || fallbackSection("contact", "Contact");
-  const footer = sectionById.get("footer") || fallbackSection("footer", "Footer");
+  const { hero, sections } = landingPageData;
 
   return (
     <div className="min-h-screen bg-white">
@@ -201,15 +118,15 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <MissionVisionSection data={missionVision} />
-        <DepartmentGridSection data={departmentGrid} />
-        <NewsSection data={news} />
-        <FacilitiesSection data={facilities} />
-        <StatisticsSection data={statistics} />
-        <ContactSection data={contact} />
+        <MissionVisionSection data={sections.missionVision} />
+        <DepartmentGridSection data={sections.departmentGrid} />
+        <NewsSection data={sections.news} />
+        <FacilitiesSection data={sections.facilities} />
+        <StatisticsSection data={sections.statistics} />
+        <ContactSection data={sections.contact} />
       </main>
 
-      <LandingFooterSection data={footer} />
+      <LandingFooterSection data={sections.footer} />
     </div>
   );
 }

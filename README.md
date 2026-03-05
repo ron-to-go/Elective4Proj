@@ -28,7 +28,7 @@ npm run build
 
 ## Content Files
 
-- Landing: `public/data/landing/*.json`
+- Landing: `src/data/landing.ts`
 - Departments: `public/data/departments/*.json`
 
 ## Collaboration Setup
