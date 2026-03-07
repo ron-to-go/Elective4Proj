@@ -14,7 +14,7 @@ export function useMEReveal(scopeRef: RefObject<HTMLElement | null>, effectKey: 
       return;
     }
 
-     if (typeof IntersectionObserver === "undefined") {
+    if (typeof IntersectionObserver === "undefined") {
       items.forEach((item) => item.classList.add("is-visible"));
       return;
     }
@@ -23,24 +23,26 @@ export function useMEReveal(scopeRef: RefObject<HTMLElement | null>, effectKey: 
       (entries) => {
         entries.forEach((entry) => {
           if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-visible");
+          window.requestAnimationFrame(() => {
+            entry.target.classList.add("is-visible");
+          });
           observer.unobserve(entry.target);
         });
       },
       {
-        threshold: 0.22,
-        rootMargin: "0px 0px -6% 0px",
+        threshold: 0.12,
+        rootMargin: "0px 0px -8% 0px",
       }
     );
 
     items.forEach((item, index) => {
       item.classList.remove("is-visible");
-      item.style.setProperty("--me-seq", `${Math.min(index, 8) * 38}ms`);
+      item.classList.add("is-reveal-ready");
+      item.style.setProperty("--me-seq", `${Math.min(index, 8) * 56}ms`);
     });
 
     const frameId = window.requestAnimationFrame(() => {
       items.forEach((item) => {
-        item.classList.add("is-reveal-ready");
         observer.observe(item);
       });
     });
