@@ -25,7 +25,9 @@ export const ECE = {
   peo: {
     title: "Program Educational Objectives (PEO)",
     subtitle: "Edit PEO subtitle here.",
-    bullets: ["PEO 1...", "PEO 2...", "PEO 3..."],
+    bullets: ["Graduates are industry-competent Electronics Engineer practitioner continually developing their technical skills across disciplines in Electronics Engineering.",
+      "Contributes significant and innovative solutions that support national development applying the principles and professional skills of Electronics Engineering.",
+      "Graduates are competitive leaders with sense of professional responsibility, social awareness and ethical values."],
   },
 
   so: {
