@@ -1,2 +1,26 @@
 /* Department-scoped custom CSS for EE page. */
 
+#so-icon {
+  filter: invert(100%)
+}
+
+.card:hover #so-icon, .card:hover #so-icon-id {
+  filter: invert(0%);
+  background-color: white;
+}
+
+#careers .card:hover, #so .card:hover {
+  
+  background-color:  #7F1D1D;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+#careers .card:hover p, #careers .card:hover h4, #so .card:hover #so-title, #so .card:hover #so-text {
+  color: white;
+}
+
+#careers .card, #so .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  ;
+}

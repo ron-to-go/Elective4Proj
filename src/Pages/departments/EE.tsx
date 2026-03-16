@@ -7,6 +7,7 @@ import { mergeDeptWithOverrides } from "../../lib/departmentAdmin";
 import { EE } from "../../data/department/EE";
 import "../../styles/departments/EE.css";
 
+
 export default function EEPage() {
   const [baseDept] = useState<typeof EE>(EE);
 
@@ -40,7 +41,7 @@ export default function EEPage() {
 
       <section id="home" className="max-w-6xl mx-auto px-6 pt-10">
         <div className="text-center">
-          <h1 className="text-3xl md:text-4xl font-extrabold tracking-wide text-gray-900">
+          <h1 className="text-3xl md:text-4xl font-extrabold tracking-wide text-grey-900">
             {dept.title}
           </h1>
           <p className="mt-2 text-sm text-gray-500">{dept.subtitle}</p>
@@ -56,7 +57,7 @@ export default function EEPage() {
 
         <div className="mt-8 grid grid-cols-12 gap-5">
           <div className="col-span-12 md:col-span-4">
-            <div className="h-[380px] md:h-[440px] rounded-2xl overflow-hidden bg-gray-200">
+            <div className="h-[380px] md:h-[540px] rounded-2xl overflow-hidden bg-gray-200">
               <img src={dept.images.heroLeft} alt="" className="w-full h-full object-cover" />
             </div>
           </div>
@@ -69,13 +70,13 @@ export default function EEPage() {
             </div>
 
             <div className="col-span-12 md:col-span-6">
-              <div className="h-[160px] rounded-2xl overflow-hidden bg-gray-200">
+              <div className="h-[280px] rounded-2xl overflow-hidden bg-gray-200">
                 <img src={dept.images.heroSmall1} alt="" className="w-full h-full object-cover" />
               </div>
             </div>
 
             <div className="col-span-12 md:col-span-6">
-              <div className="h-[160px] rounded-2xl overflow-hidden bg-gray-200">
+              <div className="h-[280px] rounded-2xl overflow-hidden bg-gray-200">
                 <img src={dept.images.heroSmall2} alt="" className="w-full h-full object-cover" />
               </div>
             </div>
@@ -85,9 +86,19 @@ export default function EEPage() {
 
       <section id="about" className="max-w-6xl mx-auto px-6 pt-10">
         <div className="text-left">
-          <div className="text-sm font-semibold text-gray-900">{dept.programOverview.heading}</div>
-          <p className="mt-3 text-sm text-gray-500 leading-relaxed max-w-3xl">{dept.programOverview.text}</p>
+          <div className="mt-2 text-lg font-bold text-gray-900">{dept.programOverview.subtitle}</div>
+          
+            {dept.programOverview.contents.map((c, idx) => (
+              <div key={idx}>
+                <div className="mt-5 text-sm font-semibold text-red-900">{c.heading}</div>
+                <p className="mt-3 text-sm text-gray-500 leading-relaxed max-w-6xl">{c.text}</p>
+              </div>
+            ))}
+          
+
         </div>
+
+
 
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
           <Stat value={dept.programOverview.stats.nonTeaching} label="Non-Teaching Personnel" accentHex={dept.theme.accentHex} />
@@ -102,7 +113,7 @@ export default function EEPage() {
         <div className="mt-10 grid grid-cols-12 gap-8 items-start">
           <div className="col-span-12 md:col-span-6">
             <div className="rounded-2xl overflow-hidden bg-gray-200">
-              <img src={dept.images.peo} alt="" className="w-full h-[320px] md:h-[360px] object-cover" />
+              <img src={dept.images.peo} alt="" className="w-full h-[320px] md:h-[400px] object-cover" />
             </div>
           </div>
 
@@ -120,9 +131,18 @@ export default function EEPage() {
         <SectionTitle center eyebrow={dept.title} title={dept.so.title} subtitle={dept.so.subtitle} />
 
         <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-          {dept.so.outcomes.map((o, idx) => (
-            <OutcomeCard key={idx} title={o.title} text={o.text} />
-          ))}
+          {dept.so.outcomes.map((o, idx) => {
+            const isLast = idx === dept.so.outcomes.length - 1;
+
+            return (
+              <div
+                key={idx}
+                className={`h-full ${isLast ? "md:col-start-2" : ""}`}
+              >
+                <OutcomeCard title={o.title} text={o.text} iconUrl={o.iconUrl} />
+              </div>
+            );
+          })}
         </div>
       </section>
 
@@ -133,18 +153,35 @@ export default function EEPage() {
             <h2 className="mt-2 text-3xl font-extrabold text-gray-900">{dept.curriculum.title}</h2>
             <p className="mt-3 text-sm text-gray-500 leading-relaxed">{dept.curriculum.text}</p>
 
-            <ul className="mt-6 space-y-3 text-sm text-gray-600">
+            <ul className="mt-6 space-y-4 text-sm text-gray-600">
               {dept.curriculum.bullets.map((b, idx) => (
-                <li key={idx} className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: dept.theme.accentHex }} />
-                  {b}
+                <li key={idx} className="flex flex-col">
+
+                  {/* Bullet + Title */}
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="w-2 h-2 rounded-full bg-yellow-500 inline-block flex-shrink-0"
+
+                    />
+                    <p className="font-semibold text-red-900">
+                      {typeof b === "string" ? b : b.title}
+                    </p>
+                  </div>
+
+                  {/* Description */}
+                  {typeof b !== "string" && (
+                    <p className="mt-3 ml-4 text-gray-600 whitespace-pre-line" >
+                      {b.text}
+                    </p>
+                  )}
+
                 </li>
               ))}
             </ul>
           </div>
 
           <div className="col-span-12 md:col-span-6">
-            <div className="h-[360px] md:h-[420px] rounded-2xl bg-gray-50 border flex items-center justify-center overflow-hidden">
+            <div className="h-[360px] md:h-[500px] rounded-2xl flex items-center justify-center overflow-hidden">
               <img src={dept.images.watermark} alt="" className="w-[420px] md:w-[520px] opacity-20 select-none" />
             </div>
           </div>
@@ -180,12 +217,23 @@ export default function EEPage() {
       <section id="careers" className="max-w-6xl mx-auto px-6 pt-16">
         <SectionTitle center eyebrow={dept.title} title={dept.careers.title} subtitle={dept.careers.subtitle} />
 
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-5">
-          {dept.careers.cards.map((card, idx) => (
-            <div key={idx} className="rounded-2xl border bg-white p-6 text-center">
-              <div className="text-3xl" aria-hidden="true">{card.icon}</div>
-              <h3 className="mt-4 font-bold text-gray-900">{card.title}</h3>
-              <p className="mt-2 text-sm text-gray-600">{card.text}</p>
+        <div id="careers" className="mt-8 grid grid-cols-1  gap-5">
+          {dept.careers.categories.map((cat, idx) => (
+            <div key={idx} className="rounded-2xl  bg-white p-6 text-center ">
+              <h3 className="font-bold text-gray-900">{cat.title}</h3>
+              <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+                {cat.cards.map((card, cardIdx) => {
+                  const isLast = cardIdx === cat.cards.length - 1;
+                  const shouldCenter = isLast && cat.cards.length % 3 === 1;
+                  return (
+                    <div key={cardIdx} className={`card rounded-2xl border bg-gray-100 p-4 gap-4 text-center flex flex-col items-center ${shouldCenter ? "md:col-start-2" : ""}`}>
+                      <div className="text-3xl" aria-hidden="true">{card.icon}</div>
+                      <h4 className="mt-2 font-bold text-gray-900">{card.title}</h4>
+                      <p className="mt-1 text-sm text-gray-600">{card.text}</p>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           ))}
         </div>
@@ -231,12 +279,18 @@ function Bullet({ title, text }: { title: string; text: string }) {
   );
 }
 
-function OutcomeCard({ title, text }: { title: string; text: string }) {
+function OutcomeCard({ title, text, iconUrl }: { title: string; text: string; iconUrl: string }) {
   return (
-    <div className="rounded-2xl border bg-white p-6 text-center">
-      <div className="mx-auto w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center">OK</div>
-      <div className="mt-4 font-semibold text-gray-900">{title}</div>
-      <div className="mt-2 text-sm text-gray-500">{text}</div>
+    <div className="card h-full rounded-2xl border bg-white p-6 text-center flex flex-col">
+      <div id="so-icon-id" className="mx-auto w-15 h-15 rounded-xl bg-red-900 flex items-center justify-center">
+        {iconUrl ? (
+          <img id="so-icon" src={iconUrl} alt={title} className="w-10 h-10 object-contain" />
+        ) : (
+          <span className="text-gray-400">No Icon</span>
+        )}
+      </div>
+      <div id="so-title" className="mt-4 font-semibold text-gray-900">{title}</div>
+      <div id="so-text" className="mt-2 text-sm text-gray-500">{text}</div>
     </div>
   );
 }

@@ -17,8 +17,12 @@ export const EE = {
   },
 
   programOverview: {
-    heading: "Program Overview",
-    text: "Edit this Program Overview text for this department.",
+    subtitle: "Program Overview",
+    contents:[
+      { heading: "1..", text: "Edit this Program Overview text for this department." },
+      { heading: "2..", text: "Edit this Program Overview text for this department." },
+      { heading: "3..", text: "Edit this Program Overview text for this department." }
+    ],
     stats: { nonTeaching: 0, faculty: 0, students: 0 },
   },
 
@@ -32,16 +36,29 @@ export const EE = {
     title: "Student Outcomes (SO)",
     subtitle: "Edit SO subtitle here.",
     outcomes: [
-      { title: "SO 1", text: "Description..." },
-      { title: "SO 2", text: "Description..." },
-      { title: "SO 3", text: "Description..." },
+      { title: "SO 1", text: "Description...", iconUrl: "" },
+      { title: "SO 2", text: "Description...", iconUrl: "" },
+      { title: "SO 3", text: "Description...", iconUrl: "" },
     ],
   },
 
   curriculum: {
     title: "Curriculum Overview",
     text: "Edit curriculum overview paragraph here.",
-    bullets: ["Bullet 1", "Bullet 2", "Bullet 3"],
+    bullets: [
+      {
+        title: "Bullet 1",
+        text: "Description or explanation for bullet 1."
+      },
+      {
+        title: "Bullet 2",
+        text: "Description or explanation for bullet 2."
+      },
+      {
+        title: "Bullet 3",
+        text: "Description or explanation for bullet 3."
+      }
+    ],
   },
 
   laboratories: {
@@ -60,10 +77,17 @@ export const EE = {
   careers: {
     title: "Career Opportunities",
     subtitle: "Edit careers subtitle here.",
-    cards: [
+    categories: [
+      { title: "Category 1", cards: [
       { icon: "💡", title: "Role 1", text: "Description..." },
       { icon: "⚡", title: "Role 2", text: "Description..." },
       { icon: "⭐", title: "Role 3", text: "Description..." },
+    ], },
+      { title: "Category 2", cards: [
+      { icon: "💡", title: "Role 4", text: "Description..." },
+      { icon: "⚡", title: "Role 5", text: "Description..." },
+      { icon: "⭐", title: "Role 6", text: "Description..." },
+      ],},    
     ],
-  },
+  }
 };
