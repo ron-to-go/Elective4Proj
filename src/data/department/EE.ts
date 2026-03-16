@@ -143,58 +143,78 @@ export const EE = {
   faculty: {
     title: "Faculty",
     members: [
-      {
-        name: "Engr. Eleazer C. Nabong",
-        role: "Department Chair"
+      { 
+        name: "Engr. Eleazer C. Nabong", 
+        role: "Department Chair" 
       },
-      {
-        name: "Engr. Sample Name",
-        role: "Faculty - Permanent"
+      { 
+        name: "Engr. Arjay R. Alba", 
+        role: "Faculty" 
       },
-      {
-        name: "Engr. Arjay R. Alba",
-        role: "Faculty"
+      { 
+        name: "Engr. Dennis L. Aguirre", 
+        role: "Faculty" 
       },
-      {
-        name: "Engr. Dennis L. Aguirre",
-        role: "Faculty"
+      { 
+        name: "Engr. Reynaldo C. Alejandria", 
+        role: "Faculty" 
       },
-      {
-        name: "Engr. Reynaldo C. Alejandria",
-        role: "Faculty"
+      { 
+        name: "Engr. Ronan Cadmiel C. Castro", 
+        role: "Faculty" 
       },
-      {
-        name: "Engr. Ronan Cadmiel C. Castro",
-        role: "Faculty"
+      { 
+        name: "Engr. John Byrone A. Clavio", 
+        role: "Faculty" 
       },
-      {
-        name: "Engr. Jovita SP. Domingo",
-        role: "Faculty"
+      { 
+        name: "Engr. John Paul V. Dela Cruz", 
+        role: "Faculty" 
       },
-      {
-        name: "Engr. Riah Ann DR. Fermin - Cayanan",
-        role: "Faculty"
+      { 
+        name: "Engr. Jovita SP. Domingo", 
+        role: "Faculty" 
       },
-      {
-        name: "Engr. Mark Adrian R. Lunaria",
-        role: "Faculty"
+      { 
+        name: "Engr. Riah Ann DR. Fermin-Cayanan", 
+        role: "Faculty" 
       },
-      {
-        name: "Engr. Erwin DR. Magsakay",
-        role: "Faculty"
+      { 
+        name: "Engr. Nhowel F. Jimenez", 
+        role: "Faculty" 
       },
-      {
-        name: "Engr. Rogelio C. Pimentel",
-        role: "Faculty"
+      { 
+        name: "Engr. Mark Adrian R. Lunaria", 
+        role: "Faculty" 
       },
-      {
-        name: "Engr. Allan Clark H. Timoteo",
-        role: "Faculty"
+      { 
+        name: "Engr. Erwin DR. Magsakay", 
+        role: "Faculty" 
       },
-      {
-        name: "Engr. Anthony T. Reyes",
-        role: "Faculty"
-      }
+      { 
+        name: "Engr. Mark Louie D. Martinez", 
+        role: "Faculty" 
+      },
+      { 
+        name: "Engr. Rogelio C. Pimentel", 
+        role: "Faculty" 
+      },
+      { 
+        name: "Engr. Anthony T. Reyes", 
+        role: "Faculty" 
+      },
+      { 
+        name: "Engr. Ronel I. Serrano", 
+        role: "Faculty" 
+      },
+      { 
+        name: "Engr. Allan Clark H. Timoteo", 
+        role: "Faculty" 
+      },
+      { 
+        name: "Engr. Diane H. Villanueva", 
+        role: "Faculty" 
+      },
     ]
   },
 
@@ -315,4 +335,3 @@ export const EE = {
     ]
   }
 };
-

@@ -207,8 +207,8 @@ export default function EEPage() {
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-5">
           {dept.faculty.members.map((member, idx) => (
             <div key={`${member.name}-${idx}`} className="rounded-2xl border bg-white p-6">
-              <h3 className="font-bold text-gray-900">{member.name}</h3>
-              <p className="mt-1 text-sm text-gray-600">{member.role}</p>
+              <h3 className="font-bold text-red-800">{member.name}</h3>
+              <p className="mt-1 text-sm text-gray-500">{member.role}</p>
             </div>
           ))}
         </div>
