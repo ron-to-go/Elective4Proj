@@ -386,26 +386,34 @@ export default function EEPage() {
       <section id="faculty" className="max-w-6xl mx-auto px-6 pt-16">
         <SectionTitle center eyebrow={dept.title} title={dept.faculty.title} />
 
-        <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6 items-stretch">
+        <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 items-stretch">
           {dept.faculty.members.map((member, idx) => (
             <div 
               key={idx} 
-              className="faculty-card-animated flex flex-col h-full group overflow-hidden shadow-sm hover:shadow-xl transition-all"
+              className="group relative flex flex-col h-full rounded-[2rem] bg-red-50/20 border border-red-200 overflow-hidden transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:bg-white hover:border-red-900"
             >
-              {/* PHOTO SECTION */}
-              <div className="w-full h-48 md:h-56 overflow-hidden flex-shrink-0 bg-white">
+              <div className="relative w-full h-48 md:h-48 overflow-hidden bg-white">
                 <img
                   src={member.photo || "/faculty/placeholder.png"}
-                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-110"
                   alt={member.name}
                 />
+                <div className="absolute inset-0 bg-red-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
 
-              {/* INFO */}
-              <div className="p-3 text-center flex-1 flex flex-col bg-white">
-                <h3 className="font-bold text-sm md:text-md text-red-800 leading-tight">{member.name}</h3>
-                <p className="mt-auto pt-2 text-sm md:text-md text-gray-400">{member.role}</p>
+              <div className="p-5 text-center flex-1 flex flex-col justify-center items-center">
+                <h3 className="font-black text-[13px] md:text-sm text-red-900 uppercase tracking-tight leading-tight transition-colors duration-300 group-hover:text-red-700">
+                  {member.name}
+                </h3>
+                
+                <div className="w-6 h-0.5 bg-red-200 my-3 rounded-full transition-all duration-500 group-hover:w-12 group-hover:bg-red-900" />
+                
+                <p className="text-[11px] md:text-xs font-bold text-gray-500 uppercase tracking-widest transition-all duration-300 group-hover:text-gray-900 group-hover:translate-y-[-2px]">
+                  {member.role}
+                </p>
               </div>
+
+              <div className="absolute bottom-0 left-0 w-full h-1 bg-red-900 scale-x-0 transition-transform duration-500 origin-left group-hover:scale-x-100" />
             </div>
           ))}
         </div>
