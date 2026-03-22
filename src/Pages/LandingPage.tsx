@@ -61,16 +61,74 @@ function FacilitiesSection({ data }: { data: Sections["facilities"] }) {
 
 function StatisticsSection({ data }: { data: Sections["statistics"] }) {
   return (
-    <section id="statistics" className="max-w-6xl mx-auto px-6 py-10">
-      <SectionCard data={data}>
-        <div className="mt-3 flex flex-wrap items-center justify-center gap-4 text-sm text-gray-700">
-          {data.stats.map((item, idx) => (
-            <span key={idx}>
-              <strong>{item.value}</strong> {item.label}
-            </span>
+    <section id="statistics" className="max-w-6xl mx-auto px-6 py-16">
+      <div className="relative overflow-hidden rounded-3xl bg-white border border-gray-100 p-8 md:p-12 shadow-[0_8px_30px_rgba(169,0,0,0.06)]">
+        
+        <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-red-500 opacity-10 blur-[80px] pointer-events-none"></div>
+        <div className="absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-orange-400 opacity-10 blur-[80px] pointer-events-none"></div>
+
+        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-12 border-b border-gray-100 pb-8">
+          <div>
+            <p className="text-sm font-bold tracking-widest text-orange-500 uppercase mb-2">College Enrollment</p>
+            <div className="flex items-baseline gap-4">
+              <h2 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#a90000] to-orange-500 tracking-tighter">
+                {data.totalStudents}
+              </h2>
+              <span className="text-xl md:text-2xl font-bold text-gray-700">Total Students</span>
+            </div>
+          </div>
+          <div className="text-left md:text-right max-w-sm">
+            <p className="text-gray-500 text-sm leading-relaxed">
+              Empowering the next generation of engineers with excellence and passion at Bulacan State University.
+            </p>
+          </div>
+        </div>
+
+        <div className="relative z-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
+          {data.departmentStats.map((dept, idx) => (
+            <div 
+              key={idx} 
+              className="group relative flex flex-col justify-between rounded-2xl border border-gray-100 bg-white p-6 transition-all duration-300 hover:-translate-y-2 hover:border-orange-300 hover:shadow-[0_15px_30px_rgba(234,88,12,0.12)]"
+            >
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#a90000] to-orange-500 transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100 rounded-t-2xl"></div>
+
+              <div>
+                <h3 className="text-2xl font-black text-gray-900 group-hover:text-[#a90000] transition-colors">{dept.dept}</h3>
+                
+                <p className="mt-1 mb-3 text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-widest leading-tight">
+                  {dept.fullName}
+                </p>
+
+                <p className="mt-1 text-3xl font-extrabold text-gray-800">
+                  {dept.students} <span className="text-xs font-semibold tracking-widest text-gray-400 uppercase">Students</span>
+                </p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-gray-50">
+                {dept.hasBoardExam ? (
+                  <div>
+                    <p className="flex items-center gap-2 text-lg font-black text-orange-600 leading-none">
+                      <span className="h-2 w-2 animate-pulse rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.8)]"></span>
+                      {dept.passingRate}
+                    </p>
+                    <p className="mt-1.5 text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-tight">
+                      Board Exam Pass Rate <br/>
+                      <span className="text-orange-500/80">({dept.latestExamDate})</span>
+                    </p>
+                  </div>
+                ) : (
+                  <div className="py-1">
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                      Non-Board Program
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
           ))}
         </div>
-      </SectionCard>
+
+      </div>
     </section>
   );
 }

@@ -40,12 +40,19 @@ export const landingPageData = {
     },
     statistics: {
       id: "statistics",
-      title: "Statistics",
+      title: "College Statistics",
       assignedGroup: "Pascual, Alyssa S.",
-      statusLabel: "RESERVED SECTION",
-      stats: [
-        { label: "Programs", value: "8" },
-        { label: "Students", value: "0" },
+      statusLabel: "ACTIVE SECTION",
+      totalStudents: "4,300",
+      departmentStats: [
+        { dept: "CE", fullName: "Civil Engineering", students: 780, hasBoardExam: true, passingRate: "63.64%", latestExamDate: "April 2025" },
+        { dept: "CPE", fullName: "Computer Engineering", students: 733, hasBoardExam: false },
+        { dept: "EE", fullName: "Electrical Engineering", students: 555, hasBoardExam: true, passingRate: "74.12%", latestExamDate: "April 2025" },
+        { dept: "ECE", fullName: "Electronics Engineering", students: 462, hasBoardExam: true, passingRate: "53.1%", latestExamDate: "October 2025" },
+        { dept: "IE", fullName: "Industrial Engineering", students: 567, hasBoardExam: false },
+        { dept: "ME", fullName: "Mechanical Engineering", students: 512, hasBoardExam: true, passingRate: "66.99%", latestExamDate: "August 2025" },
+        { dept: "MFE", fullName: "Manufacturing Engineering", students: 330, hasBoardExam: false },
+        { dept: "MEE", fullName: "Mechatronics Engineering", students: 361, hasBoardExam: false },
       ],
     },
     contact: {
