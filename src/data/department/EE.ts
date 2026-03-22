@@ -103,7 +103,7 @@ export const EE = {
       {
         title: "J",
         text: "An understanding of contemporary issues and emerging technologies in electrical engineering.",
-        iconUrl: "https://www.svgrepo.com/download/112258/thinking.svg"
+        iconUrl: "https://www.svgrepo.com/show/167185/thinking.svg"
       }
     ]
   },
