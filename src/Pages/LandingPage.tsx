@@ -207,26 +207,57 @@ export default function LandingPage() {
   }, [isPreviewMode]);
 
   const { hero, sections } = data;
+  const navLinks = [
+    { label: "Home", href: "#hero" },
+    { label: "Department", href: "/departments", isRoute: true },
+    { label: "Facilities", href: "#facilities" },
+    { label: "News", href: "#news" },
+  ] as const;
 
   return (
-    <div className="min-h-screen bg-white">
-      <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <h1 className="font-extrabold tracking-wide text-lg">BULSU COE</h1>
-          <div className="flex items-center gap-2">
-            <Link
-              to="/admin"
-              className="rounded-full border border-gray-400 px-4 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-50"
-            >
-              Landing Admin
-            </Link>
-            <Link
-              to="/departments"
-              className="rounded-full bg-[#a90000] px-5 py-2 text-sm font-semibold text-white hover:bg-[#8f0000]"
-            >
-              Department Pages
-            </Link>
-          </div>
+    <div className="min-h-screen bg-[#fbf8f4]">
+      <header className="sticky top-0 z-50 border-b border-[#ece7df] bg-white/90 backdrop-blur-xl">
+        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+          <Link to="/" className="shrink-0 rounded-full transition-transform duration-300 hover:scale-[1.03]">
+            <img
+              src="/COE.svg"
+              alt="Bulacan State University College of Engineering"
+              className="h-12 w-12 object-contain sm:h-14 sm:w-14"
+            />
+          </Link>
+
+          <nav className="hidden flex-1 items-center justify-center md:flex">
+            <ul className="flex items-center gap-10 text-[15px] font-medium text-[#8f8b84]">
+              {navLinks.map((link) => (
+                <li key={link.label}>
+                  {link.isRoute ? (
+                    <Link
+                      to={link.href}
+                      className="transition-colors duration-200 hover:text-[#202020]"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={link.href}
+                      className={`transition-colors duration-200 hover:text-[#202020] ${
+                        link.label === "Home" ? "font-semibold text-[#202020]" : ""
+                      }`}
+                    >
+                      {link.label}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <a
+            href="#contact"
+            className="inline-flex shrink-0 items-center justify-center rounded-full bg-[#b52a16] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_20px_rgba(181,42,22,0.22)] transition-colors duration-200 hover:bg-[#992211] sm:px-8"
+          >
+            Contact
+          </a>
         </div>
       </header>
 
