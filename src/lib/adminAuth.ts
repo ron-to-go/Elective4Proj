@@ -3,43 +3,40 @@ export type AdminCredentials = {
   password: string;
 };
 
-function credentialsKey(scopeKey: string) {
-  return `admin-credentials:${scopeKey}`;
+import { apiRequest } from "./api";
+
+export type AdminAuthState = {
+  hasCredentials: boolean;
+  authenticated: boolean;
+  username: string | null;
+};
+
+export async function loadAdminAuthState(scopeKey: string): Promise<AdminAuthState> {
+  return apiRequest<AdminAuthState>(`/api/auth/state/${scopeKey}`);
 }
 
-function sessionKey(scopeKey: string) {
-  return `admin-session:${scopeKey}`;
+export async function createAdminCredentials(
+  scopeKey: string,
+  credentials: AdminCredentials
+): Promise<AdminAuthState> {
+  return apiRequest<AdminAuthState>(`/api/auth/setup/${scopeKey}`, {
+    method: "POST",
+    body: JSON.stringify(credentials),
+  });
 }
 
-export function loadAdminCredentials(scopeKey: string): AdminCredentials | null {
-  if (typeof window === "undefined") return null;
-
-  const raw = window.localStorage.getItem(credentialsKey(scopeKey));
-  if (!raw) return null;
-
-  try {
-    return JSON.parse(raw) as AdminCredentials;
-  } catch {
-    return null;
-  }
+export async function loginAdmin(
+  scopeKey: string,
+  credentials: AdminCredentials
+): Promise<AdminAuthState> {
+  return apiRequest<AdminAuthState>(`/api/auth/login/${scopeKey}`, {
+    method: "POST",
+    body: JSON.stringify(credentials),
+  });
 }
 
-export function saveAdminCredentials(scopeKey: string, credentials: AdminCredentials) {
-  if (typeof window === "undefined") return;
-  window.localStorage.setItem(credentialsKey(scopeKey), JSON.stringify(credentials));
-}
-
-export function hasAdminSession(scopeKey: string): boolean {
-  if (typeof window === "undefined") return false;
-  return window.sessionStorage.getItem(sessionKey(scopeKey)) === "1";
-}
-
-export function createAdminSession(scopeKey: string) {
-  if (typeof window === "undefined") return;
-  window.sessionStorage.setItem(sessionKey(scopeKey), "1");
-}
-
-export function clearAdminSession(scopeKey: string) {
-  if (typeof window === "undefined") return;
-  window.sessionStorage.removeItem(sessionKey(scopeKey));
+export async function logoutAdmin(scopeKey: string) {
+  await apiRequest(`/api/auth/logout/${scopeKey}`, {
+    method: "POST",
+  });
 }

@@ -1,11 +1,8 @@
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { Building2, CalendarDays, Send, Users } from "lucide-react";
 import { Link } from "react-router-dom";
-import { landingPageData, type LandingPageData } from "../data/landing";
-import {
-  loadLandingDraft,
-  mergeLandingWithOverrides,
-} from "../lib/landingAdmin";
+import { type LandingPageData } from "../data/landing";
+import { useLandingPageContent } from "../lib/landingAdmin";
 
 type Sections = LandingPageData["sections"];
 type HeroStat = LandingPageData["hero"]["stats"][number];
@@ -190,30 +187,7 @@ function SectionCard({
 }
 
 export default function LandingPage() {
-  const isPreviewMode = useMemo(() => {
-    if (typeof window === "undefined") return false;
-    return new URLSearchParams(window.location.search).get("preview") === "landing";
-  }, []);
-
-  const [data, setData] = useState(() => {
-    if (isPreviewMode) {
-      return loadLandingDraft() ?? mergeLandingWithOverrides(landingPageData);
-    }
-
-    return mergeLandingWithOverrides(landingPageData);
-  });
-
-  useEffect(() => {
-    if (!isPreviewMode) return;
-
-    const onStorage = (event: StorageEvent) => {
-      if (event.key !== "landing-admin-draft") return;
-      setData(loadLandingDraft() ?? mergeLandingWithOverrides(landingPageData));
-    };
-
-    window.addEventListener("storage", onStorage);
-    return () => window.removeEventListener("storage", onStorage);
-  }, [isPreviewMode]);
+  const data = useLandingPageContent();
 
   const { navbar, hero, sections } = data;
 

@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { departments, type DeptCode } from "../data/department";
 import type { DepartmentData } from "../types/department";
+import { clearPublishedContent, fetchPublishedContent, savePublishedContent } from "./contentApi";
 import { mergeWithShape } from "./jsonShape";
 
 export type DepartmentEditableContent = DepartmentData;
@@ -27,7 +29,6 @@ export function loadDeptOverrides(
   code: DeptCode
 ): DepartmentEditableContent | null {
   if (typeof window === "undefined") return null;
-
   const raw = window.localStorage.getItem(storageKey(code));
   if (!raw) return null;
 
@@ -40,14 +41,25 @@ export function loadDeptOverrides(
   }
 }
 
-export function saveDeptOverrides(code: DeptCode, content: DepartmentEditableContent) {
-  if (typeof window === "undefined") return;
-  window.localStorage.setItem(storageKey(code), JSON.stringify(content));
+export async function fetchDeptOverrides(
+  code: DeptCode
+): Promise<DepartmentEditableContent | null> {
+  const content = await fetchPublishedContent<DepartmentEditableContent>(code);
+  if (!content) return null;
+
+  const defaults = getDeptDefaults(code);
+  return mergeWithShape(defaults, content) as DepartmentEditableContent;
 }
 
-export function clearDeptOverrides(code: DeptCode) {
-  if (typeof window === "undefined") return;
-  window.localStorage.removeItem(storageKey(code));
+export async function saveDeptOverrides(
+  code: DeptCode,
+  content: DepartmentEditableContent
+) {
+  await savePublishedContent(code, content);
+}
+
+export async function clearDeptOverrides(code: DeptCode) {
+  await clearPublishedContent(code);
 }
 
 export function loadDeptDraft(code: DeptCode): DepartmentEditableContent | null {
@@ -81,7 +93,7 @@ export function mergeDeptWithOverrides<T extends DepartmentData>(dept: T): T {
     new URLSearchParams(window.location.search).get("preview") === "dept";
 
   const code = dept.code as DeptCode;
-  const source = isPreviewMode ? loadDeptDraft(code) : loadDeptOverrides(code);
+  const source = isPreviewMode ? loadDeptDraft(code) : null;
 
   if (!source) return dept;
 
@@ -95,4 +107,47 @@ export function parseEditableContent(
   const parsed = JSON.parse(json) as unknown;
   const defaults = getDeptDefaults(code);
   return mergeWithShape(defaults, parsed) as DepartmentEditableContent;
+}
+
+export function useDepartmentPageContent<T extends DepartmentData>(baseDept: T): T {
+  const code = baseDept.code as DeptCode;
+  const isPreviewMode =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("preview") === "dept";
+
+  const [dept, setDept] = useState<T>(() => {
+    if (!isPreviewMode) return baseDept;
+
+    const draft = loadDeptDraft(code);
+    if (!draft) return baseDept;
+
+    return mergeWithShape(baseDept, draft) as T;
+  });
+
+  useEffect(() => {
+    let cancelled = false;
+
+    if (isPreviewMode) {
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    fetchDeptOverrides(code)
+      .then((overrides) => {
+        if (cancelled || !overrides) return;
+        setDept(mergeWithShape(baseDept, overrides) as T);
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setDept(baseDept);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [baseDept, code, isPreviewMode]);
+
+  return dept;
 }

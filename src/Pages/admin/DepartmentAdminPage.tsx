@@ -1,69 +1,100 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import AdminAccessGate from "../components/AdminAccessGate";
-import JsonValueEditor from "../components/JsonValueEditor";
-import ResizablePagePreview from "../components/ResizablePagePreview";
+import AdminAccessGate from "../../components/AdminAccessGate";
+import JsonValueEditor from "../../components/JsonValueEditor";
+import ResizablePagePreview from "../../components/ResizablePagePreview";
 import {
-  clearLandingDraft,
-  clearLandingOverrides,
-  fetchLandingOverrides,
-  getLandingDefaults,
-  loadLandingDraft,
-  saveLandingDraft,
-  saveLandingOverrides,
-  type LandingEditableContent,
-} from "../lib/landingAdmin";
+  clearDeptDraft,
+  clearDeptOverrides,
+  extractEditableContent,
+  fetchDeptOverrides,
+  getDeptDefaults,
+  loadDeptDraft,
+  saveDeptDraft,
+  saveDeptOverrides,
+  type DepartmentEditableContent,
+} from "../../lib/departmentAdmin";
+import { mergeWithShape } from "../../lib/jsonShape";
+import type { DeptCode } from "../../lib/departmentData";
+import type { DepartmentData } from "../../types/department";
 
-export default function LandingAdminPage() {
-  const defaults = getLandingDefaults();
-  const cloneDefaults = () =>
-    JSON.parse(JSON.stringify(defaults)) as LandingEditableContent;
+type DepartmentAdminPageProps = {
+  code: DeptCode;
+};
 
-  const [form, setForm] = useState<LandingEditableContent>(() => loadLandingDraft() ?? cloneDefaults());
+export default function DepartmentAdminPage({
+  code,
+}: DepartmentAdminPageProps) {
+  const [baseDept, setBaseDept] = useState<DepartmentData | null>(null);
+  const [form, setForm] = useState<DepartmentEditableContent | null>(null);
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
-    const draft = loadLandingDraft();
+
+    const data = getDeptDefaults(code);
+    const defaults = extractEditableContent(data);
+    const draft = loadDeptDraft(code);
+
+    setBaseDept(data);
+    setForm(mergeWithShape(defaults, draft));
+    setError("");
 
     if (draft) {
-      setForm(draft);
       return () => {
         cancelled = true;
       };
     }
 
-    fetchLandingOverrides()
+    fetchDeptOverrides(code)
       .then((overrides) => {
-        if (cancelled || !overrides) return;
-        setForm(overrides);
+        if (cancelled) return;
+        setForm(overrides ? mergeWithShape(defaults, overrides) : defaults);
       })
       .catch((err) => {
         if (cancelled) return;
-        const message = err instanceof Error ? err.message : "Failed to load landing admin data.";
+        const message =
+          err instanceof Error ? err.message : "Failed to load department admin data.";
         setError(message);
       });
 
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [code]);
 
   useEffect(() => {
-    saveLandingDraft(form);
-  }, [form]);
+    if (!form) return;
+    saveDeptDraft(code, form);
+  }, [code, form]);
+
+  if (error) {
+    return (
+      <div className="min-h-screen grid place-items-center px-6 text-center">
+        <p className="text-sm text-red-700">{error}</p>
+      </div>
+    );
+  }
+
+  if (!baseDept || !form) {
+    return (
+      <div className="min-h-screen grid place-items-center px-6 text-center">
+        <p className="text-sm text-gray-600">Loading department admin...</p>
+      </div>
+    );
+  }
 
   const handleSave = async () => {
     setIsSubmitting(true);
     setStatus("");
 
     try {
-      await saveLandingOverrides(form);
-      setStatus("Saved published landing content to the server.");
+      await saveDeptOverrides(code, form);
+      setStatus("Saved published department content to the server.");
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to save landing content.";
+      const message = err instanceof Error ? err.message : "Failed to save department content.";
       setStatus(message);
     } finally {
       setIsSubmitting(false);
@@ -75,52 +106,54 @@ export default function LandingAdminPage() {
     setStatus("");
 
     try {
-      await clearLandingOverrides();
-      clearLandingDraft();
-      setForm(cloneDefaults());
-      setStatus("Reset complete. Published landing override removed.");
+      await clearDeptOverrides(code);
+      clearDeptDraft(code);
+      setForm(extractEditableContent(baseDept));
+      setStatus("Reset complete. Published server override removed.");
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to reset landing content.";
+      const message = err instanceof Error ? err.message : "Failed to reset department content.";
       setStatus(message);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const jsonText = JSON.stringify(form, null, 2);
+  const fullJsonText = JSON.stringify({ ...baseDept, ...form }, null, 2);
 
-  const handleDownload = () => {
-    const blob = new Blob([jsonText], { type: "application/json" });
+  const handleDownloadJson = () => {
+    const blob = new Blob([fullJsonText], { type: "application/json" });
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement("a");
     anchor.href = url;
-    anchor.download = "landing.override.json";
+    anchor.download = `${code}.json`;
     anchor.click();
     URL.revokeObjectURL(url);
-    setStatus("Downloaded landing.override.json from the current editor state.");
+    setStatus(`Downloaded ${code}.json from the current editor state.`);
   };
 
-  const handleCopy = async () => {
+  const handleCopyJson = async () => {
     try {
-      await navigator.clipboard.writeText(jsonText);
-      setStatus("Copied landing override JSON from the current editor state.");
+      await navigator.clipboard.writeText(fullJsonText);
+      setStatus("Copied full JSON from the current editor state.");
     } catch {
-      setStatus("Clipboard access failed. Use Download instead.");
+      setStatus("Clipboard access failed. Use Download JSON instead.");
     }
   };
 
   return (
-    <AdminAccessGate scopeKey="landing" title="Landing Page Admin">
+    <AdminAccessGate scopeKey={`department-${code}`} title={`${code} Department Admin`}>
       {({ logout }) => (
         <div className="min-h-screen bg-gray-100">
-          <div className="grid min-h-screen grid-cols-1 xl:grid-cols-[1.05fr_0.95fr] gap-6">
+          <div className="grid min-h-screen grid-cols-1 xl:grid-cols-[1.1fr_0.9fr] gap-6">
             <div className="border bg-white p-6 md:p-8">
               <p className="text-xs font-semibold tracking-[0.14em] text-gray-500">
-                LANDING ADMIN
+                DEPARTMENT ADMIN
               </p>
-              <h1 className="mt-2 text-3xl font-black text-gray-900">Landing Editor</h1>
+              <h1 className="mt-2 text-3xl font-black text-gray-900">
+                {baseDept.title} Admin Editor
+              </h1>
               <p className="mt-3 text-sm text-gray-600">
-                Fields are generated from landing JSON structure.
+                Fields are generated from department JSON structure.
               </p>
 
               <section className="mt-8 rounded-xl border p-5">
@@ -131,7 +164,7 @@ export default function LandingAdminPage() {
                 <div className="mt-4">
                   <JsonValueEditor
                     value={form}
-                    onChange={(next) => setForm(next as LandingEditableContent)}
+                    onChange={(next) => setForm(next as DepartmentEditableContent)}
                   />
                 </div>
               </section>
@@ -147,15 +180,15 @@ export default function LandingAdminPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={handleDownload}
+                  onClick={handleDownloadJson}
                   disabled={isSubmitting}
                   className="rounded-full border border-gray-400 px-5 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  Download Override JSON
+                  Download {code}.json
                 </button>
                 <button
                   type="button"
-                  onClick={handleCopy}
+                  onClick={handleCopyJson}
                   disabled={isSubmitting}
                   className="rounded-full border border-gray-400 px-5 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
                 >
@@ -178,22 +211,21 @@ export default function LandingAdminPage() {
                   Logout
                 </button>
                 <Link
-                  to="/"
+                  to={`/dept/${baseDept.code}`}
                   className="rounded-full border border-gray-400 px-5 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-50"
                 >
-                  View Landing Page
+                  View Department Page
                 </Link>
               </div>
 
               {status && <p className="mt-4 text-sm text-gray-700">{status}</p>}
-              {error && <p className="mt-2 text-sm text-red-700">{error}</p>}
             </div>
 
             <ResizablePagePreview
               title="Live Preview"
-              description="This is the actual landing page rendered in an iframe. It refreshes automatically while you type."
-              previewUrl="/?preview=landing"
-              liveToken={jsonText}
+              description="This is the actual department page rendered in an iframe. It refreshes automatically while you type."
+              previewUrl={`/dept/${code}?preview=dept`}
+              liveToken={fullJsonText}
             />
           </div>
         </div>

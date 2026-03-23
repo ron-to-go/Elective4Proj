@@ -1,10 +1,9 @@
 import { useEffect, useState, type ReactNode } from "react";
 import {
-  createAdminSession,
-  hasAdminSession,
-  loadAdminCredentials,
-  saveAdminCredentials,
-  clearAdminSession,
+  createAdminCredentials,
+  loadAdminAuthState,
+  loginAdmin,
+  logoutAdmin,
 } from "../lib/adminAuth";
 
 type AdminAccessGateProps = {
@@ -18,31 +17,73 @@ export default function AdminAccessGate({
   title,
   children,
 }: AdminAccessGateProps) {
-  const [authenticated, setAuthenticated] = useState(() => hasAdminSession(scopeKey));
-  const [hasCredentials, setHasCredentials] = useState(() =>
-    Boolean(loadAdminCredentials(scopeKey))
-  );
+  const [authenticated, setAuthenticated] = useState(false);
+  const [hasCredentials, setHasCredentials] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    setHasCredentials(Boolean(loadAdminCredentials(scopeKey)));
+    let cancelled = false;
+
+    setIsLoading(true);
+    setError("");
+
+    loadAdminAuthState(scopeKey)
+      .then((state) => {
+        if (cancelled) return;
+        setHasCredentials(state.hasCredentials);
+        setAuthenticated(state.authenticated);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        const message = err instanceof Error ? err.message : "Failed to load admin access state.";
+        setError(message);
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setIsLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [scopeKey]);
 
   const isFirstTimeSetup = !hasCredentials;
 
-  const logout = () => {
-    clearAdminSession(scopeKey);
-    setAuthenticated(false);
+  const logout = async () => {
+    setIsSubmitting(true);
+    setError("");
+
+    try {
+      await logoutAdmin(scopeKey);
+      setAuthenticated(false);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to log out.";
+      setError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-100 grid place-items-center px-6 py-10">
+        <p className="text-sm text-gray-600">Loading admin access...</p>
+      </div>
+    );
+  }
 
   if (authenticated) {
     return <>{children({ logout })}</>;
   }
 
-  const onCreateCredentials = () => {
+  const onCreateCredentials = async () => {
     if (!username.trim() || !password) {
       setError("Username and password are required.");
       return;
@@ -53,33 +94,43 @@ export default function AdminAccessGate({
       return;
     }
 
-    saveAdminCredentials(scopeKey, {
-      username: username.trim(),
-      password,
-    });
-
-    setHasCredentials(true);
-    createAdminSession(scopeKey);
-    setAuthenticated(true);
+    setIsSubmitting(true);
     setError("");
+
+    try {
+      const state = await createAdminCredentials(scopeKey, {
+        username: username.trim(),
+        password,
+      });
+
+      setHasCredentials(state.hasCredentials);
+      setAuthenticated(state.authenticated);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to create admin credentials.";
+      setError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const onLogin = () => {
-    const credentials = loadAdminCredentials(scopeKey);
-
-    if (!credentials) {
-      setError("No credentials found. Refresh and create credentials.");
-      return;
-    }
-
-    if (credentials.username !== username.trim() || credentials.password !== password) {
-      setError("Invalid username or password.");
-      return;
-    }
-
-    createAdminSession(scopeKey);
-    setAuthenticated(true);
+  const onLogin = async () => {
+    setIsSubmitting(true);
     setError("");
+
+    try {
+      const state = await loginAdmin(scopeKey, {
+        username: username.trim(),
+        password,
+      });
+
+      setHasCredentials(state.hasCredentials);
+      setAuthenticated(state.authenticated);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to log in.";
+      setError(message);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -98,6 +149,7 @@ export default function AdminAccessGate({
                 <input
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  disabled={isSubmitting}
                   className="w-full rounded-lg border px-3 py-2"
                 />
               </Field>
@@ -106,6 +158,7 @@ export default function AdminAccessGate({
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  disabled={isSubmitting}
                   className="w-full rounded-lg border px-3 py-2"
                 />
               </Field>
@@ -114,6 +167,7 @@ export default function AdminAccessGate({
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
+                  disabled={isSubmitting}
                   className="w-full rounded-lg border px-3 py-2"
                 />
               </Field>
@@ -121,7 +175,8 @@ export default function AdminAccessGate({
             <button
               type="button"
               onClick={onCreateCredentials}
-              className="mt-5 w-full rounded-full bg-[#a90000] px-5 py-2 text-sm font-semibold text-white hover:bg-[#8f0000]"
+              disabled={isSubmitting}
+              className="mt-5 w-full rounded-full bg-[#a90000] px-5 py-2 text-sm font-semibold text-white hover:bg-[#8f0000] disabled:cursor-not-allowed disabled:opacity-60"
             >
               Create Credentials
             </button>
@@ -134,6 +189,7 @@ export default function AdminAccessGate({
                 <input
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  disabled={isSubmitting}
                   className="w-full rounded-lg border px-3 py-2"
                 />
               </Field>
@@ -142,6 +198,7 @@ export default function AdminAccessGate({
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  disabled={isSubmitting}
                   className="w-full rounded-lg border px-3 py-2"
                 />
               </Field>
@@ -149,7 +206,8 @@ export default function AdminAccessGate({
             <button
               type="button"
               onClick={onLogin}
-              className="mt-5 w-full rounded-full bg-[#a90000] px-5 py-2 text-sm font-semibold text-white hover:bg-[#8f0000]"
+              disabled={isSubmitting}
+              className="mt-5 w-full rounded-full bg-[#a90000] px-5 py-2 text-sm font-semibold text-white hover:bg-[#8f0000] disabled:cursor-not-allowed disabled:opacity-60"
             >
               Login
             </button>
