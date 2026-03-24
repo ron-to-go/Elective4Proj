@@ -746,7 +746,7 @@ export default function CPEPage() {
           ))}
         </div>
       </section>
-      
+
       {/* --- CONTACT SECTION --- */}
       <section id="contact" className="max-w-6xl mx-auto px-6 pt-16">
         <div className="rounded-2xl border bg-gray-50 p-6 md:p-8">
@@ -788,23 +788,3 @@ function Stat({
   );
 }
 
-// function Bullet({ title, text }: { title: string; text: string }) {
-//   return (
-//     <div>
-//       <div className="font-semibold text-gray-900">{title}</div>
-//       <div className="mt-1 text-sm text-gray-500">{text}</div>
-//     </div>
-//   );
-// }
-
-// function OutcomeCard({ title, text }: { title: string; text: string }) {
-//   return (
-//     <div className="rounded-2xl border bg-white p-6 text-center">
-//       <div className="mx-auto w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center font-bold text-[#A90000]">
-//         ✓
-//       </div>
-//       <div className="mt-4 font-semibold text-gray-900">{title}</div>
-//       <div className="mt-2 text-sm text-gray-500">{text}</div>
-//     </div>
-//   );
-// }
