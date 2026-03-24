@@ -199,17 +199,17 @@ export const CPE = {
       { 
         name: "Dr. Ma. Magdalena V. Gatdula", 
         role: "University Registrar, Faculty",
-        imageUrl: "/departments/CPE/faculty/magdalena_gatdula.jpg"
+        imageUrl: "/departments/CPE/faculty/magdalena_gatdula.jpeg"
       },
       { 
         name: "Dr. Monaliza S. Jimenez", 
         role: "Faculty",
-        imageUrl: "/departments/CPE/faculty/monaliza_jimenez.jpg"
+        imageUrl: "/departments/CPE/faculty/monaliza_jimenez.png"
       },
       { 
         name: "Engr. Julius Vincent M. Abanel", 
         role: "Part-Time Instructor, Faculty",
-        imageUrl: "/departments/CPE/faculty/julius_abanel.jpg"
+        imageUrl: "/departments/CPE/faculty/julius_abanel.JPG"
       },
       { 
         name: "Engr. Arlyne Joy De Jesus", 
@@ -237,14 +237,14 @@ export const CPE = {
         imageUrl: "/departments/CPE/faculty/robert_chavez.jpg"
       },
       { 
-        name: "Engr. Albert C. Cruz Jr.", 
-        role: "Part-Time Instructor, Faculty",
-        imageUrl: "/departments/CPE/faculty/albert_cruz.jpg"
+        name: "Engr. Alberto C. Cruz Jr.", 
+        role: "Faculty",
+        imageUrl: "../departments/CPE/faculty/alberto_cruz.jpeg"
       },
       { 
         name: "Engr. Maria Ana G. Dangan", 
         role: "Guest Lecturer, Faculty",
-        imageUrl: "/departments/CPE/faculty/maria_dangan.jpg"
+        imageUrl: "../departments/CPE/faculty/maria_dangan.jpeg"
       },
       { 
         name: "Engr. Sheila May M. Liwag", 

@@ -759,7 +759,7 @@ export default function CPEPage() {
                         }`}
                       >
                         <img
-                          src="/api/placeholder/300/300"
+                          src={member.imageUrl || "/api/placeholder/300/300"}
                           alt={`${member.name} portrait`}
                           className="w-full h-full object-cover transition-all duration-700 grayscale group-hover:grayscale-0 group-hover:scale-105"
                         />
