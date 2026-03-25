@@ -513,15 +513,6 @@ function Stat({
   );
 }
 
-function Bullet({ title, text }: { title: string; text: string }) {
-  return (
-    <div>
-      <div className="font-semibold text-gray-900">{title}</div>
-      <div className="mt-1 text-sm text-gray-500">{text}</div>
-    </div>
-  );
-}
-
 function OutcomeCard({ title, text, iconUrl }: { title: string; text: string; iconUrl: string }) {
   return (
     <div className="card h-full rounded-2xl bg-gray-100 p-6 text-center flex flex-col">

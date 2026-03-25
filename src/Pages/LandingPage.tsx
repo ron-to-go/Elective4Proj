@@ -290,6 +290,9 @@ function StatisticsSection({ data }: { data: Sections["statistics"] }) {
 }
 
 function ContactSection({ data }: { data: Sections["contact"] }) {
+  // TODO: use data
+  data = data; // doing it this way for now so that the website actually builds...
+
   const contacts = [
     {
       program: "Bachelor of Science in Civil Engineering",

@@ -456,19 +456,6 @@ function Stat({
   );
 }
 
-function Bullet({ title, text }: { title: string; text: string }) {
-  return (
-    <div>
-      <div className="text-lg font-bold text-gray-900">
-        {title}
-      </div>
-      <div className="text-sm text-gray-700 text-justify leading-relaxed">
-        {text}
-      </div>
-    </div>
-  );
-}
-
 const outcomeIcons = [
   Lightbulb, Users, FlaskConical, ShieldCheck, Wrench, Scale, MessageSquare, Globe, BookOpen, Scale, Cpu, Briefcase, Cog,
 ];
