@@ -13,7 +13,7 @@ export const MEE = {
     heroBig: `${base}/hero-big.png`,
     heroSmall1: `${base}/hero-small-1.png`,
     heroSmall2: `${base}/hero-small-2.png`,
-    peo: `${base}/side.webp`,
+    peo: `${base}/side.gif`,
     watermark: `${base}/watermark.png`,
   },
 

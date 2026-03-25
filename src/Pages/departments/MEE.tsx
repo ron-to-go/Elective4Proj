@@ -24,7 +24,7 @@ import {
 
 export default function MEEPage() {
   const [baseDept] = useState<typeof MEE>(MEE);
-  const [openYear, setOpenYear] = useState<number | null>(null);
+
 
   const dept = useMemo(() => mergeDeptWithOverrides(baseDept), [baseDept]);
 
@@ -187,10 +187,9 @@ export default function MEEPage() {
 
       <section id="about" className="max-w-6xl mx-auto px-6 pt-10">
         <div className="mt-12 max-w-[1100px]">
-          <div className="text-[25px] font-semibold text-gray-900 tracking-wide">
-            {dept.programOverview.heading}
-          </div>
-
+<SectionTitle
+  title={dept.programOverview.heading}
+/>
           <p className="mt-4 text-md text-gray-800 leading-9 text-justify">
             {dept.programOverview.text}
           </p>
@@ -235,7 +234,7 @@ export default function MEEPage() {
 
   {/* IMAGE */}
   <div className="col-span-12 md:col-span-6 overflow-hidden">
-    <div className="w-full h-[260px] md:h-[320px] rounded-2xl overflow-hidden flex items-center justify-center">
+    <div className="w-full h-[350px] md:h-[350px] rounded-2xl overflow-hidden flex items-center justify-center">
       
       <img
         src={dept.images.peo}
