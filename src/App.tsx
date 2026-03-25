@@ -16,6 +16,7 @@ import ECEPage from "./Pages/departments/ECE";
 import EEPage from "./Pages/departments/EE";
 import IEPage from "./Pages/departments/IE";
 import MEPage from "./Pages/departments/ME";
+import MEExcellencePage from "./Pages/departments/MEExcellence";
 import MEEPage from "./Pages/departments/MEE";
 import MFEPage from "./Pages/departments/MFE";
 import ScrollToTop from "./components/ScrollToTop";
@@ -35,6 +36,7 @@ export default function App() {
         <Route path="/dept/EE" element={<EEPage />} />
         <Route path="/dept/IE" element={<IEPage />} />
         <Route path="/dept/ME" element={<MEPage />} />
+        <Route path="/dept/ME/excellence" element={<MEExcellencePage />} />
         <Route path="/dept/MEE" element={<MEEPage />} />
         <Route path="/dept/MFE" element={<MFEPage />} />
         <Route path="/dept/CE/admin" element={<CEAdminPage />} />

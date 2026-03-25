@@ -4,9 +4,10 @@ export const landingPageData = {
     logoAlt: "Bulacan State University College of Engineering",
     links: [
       { label: "Home", href: "#hero", isRoute: false },
-      { label: "Department", href: "/departments", isRoute: true },
+      { label: "Department", href: "#programs-grid", isRoute: false },
       { label: "Facilities", href: "#facilities", isRoute: false },
       { label: "News", href: "#news", isRoute: false },
+      { label: "Alumni", href: "https://coebulsu-alumni-tracker.vercel.app/", isRoute: false  }
     ],
     contactLabel: "Contact",
     contactHref: "#contact",
