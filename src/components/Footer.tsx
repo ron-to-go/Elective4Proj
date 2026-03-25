@@ -47,7 +47,7 @@ export default function Footer() {
                 style={{ backgroundColor: "#8B1A1A" }}
             >
                 {}
-                <div className="w-full h-px bg-yellow-400"></div>
+                <div className="w-full h-px bg-yellow-400" style={{ opacity: 0.5 }}></div>
 
                 {/* HEADER WITH LOGO LEFT AND BACK TO TOP RIGHT */}
                 <div className="w-full py-8 flex items-center justify-between px-6" style={{ backgroundColor: "#8B1A1A" }}>
@@ -77,7 +77,7 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div className="w-full h-px bg-yellow-400"></div>
+                <div className="w-full h-px bg-yellow-400" style={{ opacity: 0.2 }}></div>
                 
                 <div className="max-w-6xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-10 items-start">
 
