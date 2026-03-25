@@ -182,5 +182,7 @@ export default function EEAdminPage() {
         </div>
       )}
     </AdminAccessGate>
+    
   );
+  
 }

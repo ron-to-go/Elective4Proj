@@ -6,6 +6,7 @@ import {
   loadLandingDraft,
   mergeLandingWithOverrides,
 } from "../lib/landingAdmin";
+import { Mail } from "lucide-react";
 
 import CE_Img from '../assets/Civil_Engineering.jpg';
 import CPE_Img from '../assets/Computer_Engineering.jpg';
@@ -289,13 +290,83 @@ function StatisticsSection({ data }: { data: Sections["statistics"] }) {
 }
 
 function ContactSection({ data }: { data: Sections["contact"] }) {
+  const contacts = [
+    {
+      program: "Bachelor of Science in Civil Engineering",
+      email: "radgerteddy.manuel@bulsu.edu.ph",
+    },
+    {
+      program: "Bachelor of Science in Computer Engineering",
+      email: "marialorena.villena@ms.bulsu.edu.ph",
+    },
+    {
+      program: "Bachelor of Science in Electrical Engineering",
+      email: "eleazar.nabong@ms.bulsu.edu.ph",
+    },
+    {
+      program: "Bachelor of Science in Electronics Engineering",
+      email: "donald.lapiguera@bulsu.edu.ph",
+    },
+    {
+      program: "Bachelor of Science in Industrial Engineering",
+      email: "jeremylaurence.banez@bulsu.edu.ph",
+    },
+    {
+      program: "Bachelor of Science in Mechanical Engineering",
+      email: "aldrin.bernardo@bulsu.edu.ph",
+    },
+    {
+      program: "Bachelor of Science in Manufacturing Engineering",
+      email: "mfe@bulsu.edu.ph",
+    },
+    {
+      program: "Bachelor of Science in Mechatronics Engineering",
+      email: "arvinjulius.tullao@bulsu.edu.ph",
+    },
+  ];
+
   return (
-    <section id="contact" className="max-w-6xl mx-auto px-6 py-10">
-      <SectionCard data={data}>
-        <p className="mt-3 text-sm text-gray-600">Email: {data.email}</p>
-        <p className="text-sm text-gray-600">Phone: {data.phone}</p>
-        <p className="text-sm text-gray-600">Address: {data.address}</p>
-      </SectionCard>
+    <section id="contact" className="max-w-6xl mx-auto px-6 py-16">
+      <div className="rounded-3xl bg-white border border-gray-100 p-8 md:p-12 shadow-[0_8px_30px_rgba(169,0,0,0.06)]">
+
+        <div className="mb-10 border-b border-gray-100 pb-6">
+          <p className="text-sm font-bold tracking-widest text-orange-500 uppercase mb-2">
+            Contact Directory
+          </p>
+          <h2 className="text-3xl md:text-4xl font-black text-[#a90000]">
+            College of Engineering
+          </h2>
+          <p className="mt-2 text-sm text-gray-500">
+            Bulacan State University
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {contacts.map((item, idx) => (
+            <div
+              key={idx}
+              className="group rounded-2xl border border-gray-100 bg-white p-6 transition-all duration-300 hover:-translate-y-2 hover:border-orange-400 hover:shadow-[0_15px_30px_rgba(234,88,12,0.12)]"
+            >
+              <h3 className="text-lg font-bold text-gray-900 group-hover:text-[#a90000] transition-colors">
+                {item.program}
+              </h3>
+
+              <div className="mt-3 flex items-center gap-3 text-sm text-gray-600">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-orange-50 group-hover:bg-orange-100 transition">
+                  <Mail className="h-4 w-4 text-orange-500" strokeWidth={2} />
+                </div>
+                <span className="leading-none">{item.email}</span>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-gray-50">
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                  Bulacan State University
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
