@@ -50,7 +50,11 @@ export const MFE = {
 
   laboratories: {
     title: "Laboratories",
-    items: ["Lab 1", "Lab 2", "Lab 3"],
+    items: [
+      { name: "Facility 1", image: `${base}/NH401.png` },
+      { name: "Facility 2", image: `${base}/COE2-107.png`},
+      { name: "Facility 3", image: `${base}/NH403.png`},
+    ],
   },
 
   faculty: {
@@ -68,11 +72,23 @@ export const MFE = {
 
   careers: {
     title: "Career Opportunities",
-    subtitle: "Edit careers subtitle here.",
+    subtitle: "Graduates are engineered to lead in the global industrial landscape, mastering the transition from raw concepts to high-precision reality.",
     cards: [
-      { icon: "💡", title: "Role 1", text: "Description..." },
-      { icon: "⚡", title: "Role 2", text: "Description..." },
-      { icon: "⭐", title: "Role 3", text: "Description..." },
+      { 
+        icon: "💡", 
+        title: "Process Engineer", 
+        text: "Design and optimize integrated systems of personnel, equipment, and energy to maximize production efficiency and minimize waste." 
+      },
+      { 
+        icon: "⚡", 
+        title: "Automation Specialist", 
+        text: "Lead the implementation of Industry 4.0 technologies, including robotics, AI-driven workflows, and smart manufacturing systems." 
+      },
+      { 
+        icon: "⭐", 
+        title: "Quality Manager", 
+        text: "Oversee high-standard compliance and precision control, ensuring every product meets rigorous international engineering benchmarks." 
+      },
     ],
   },
 };

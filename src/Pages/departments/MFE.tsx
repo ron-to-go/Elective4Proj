@@ -81,6 +81,8 @@ export default function MFEPage() {
     if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const [selectedLab, setSelectedLab] = useState<null | { name: string; image: string }>(null);
+
   return (
     <div className="bg-[#fcfcfc] min-h-screen font-sans selection:bg-black selection:text-white overflow-x-hidden">
       <style>{`
@@ -240,22 +242,58 @@ export default function MFEPage() {
       </section>
 
       {/* --- curriculum --- */}
-      <section id="curriculum" className="max-w-6xl mx-auto px-6 py-20">
-        <div className="grid lg:grid-cols-12 gap-8 items-start">
-          <div className="lg:col-span-3">
+      <section id="curriculum" className="relative max-w-7xl mx-auto px-6 py-32 overflow-hidden">
+        <div className="grid lg:grid-cols-12 gap-12 items-start relative z-10">
+          <div className="lg:col-span-4">
             <div className="sticky top-32 flex flex-col items-center lg:items-start">
-              <div className="relative w-40 h-40 md:w-48 md:h-48 rounded-3xl bg-white border border-slate-100 shadow-sm p-6 flex items-center justify-center group hover:border-black transition-all duration-500">
-                <img src={dept.images.watermark} className="w-full h-full object-contain grayscale opacity-20 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" alt="MFE" />
+              <div className="group relative">
+                <div className="absolute -inset-4 bg-slate-50 rounded-[3rem] scale-95 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-700 -z-10" />
+                
+                <div className="relative w-48 h-48 md:w-64 md:h-64 rounded-[2.5rem] bg-white border border-slate-100 shadow-sm p-10 flex items-center justify-center transition-all duration-500 group-hover:border-black group-hover:shadow-2xl">
+                  <img 
+                    src={dept.images.watermark} 
+                    className="w-full h-full object-contain grayscale opacity-60 group-hover:opacity-100 group-hover:scale-110 group-hover:rotate-3 transition-all duration-1000" 
+                    alt={dept.code} 
+                  />
+                  <div className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: dept.theme.accentHex }} />
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-10 text-center lg:text-left">
+                <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.4em] block mb-2">Program Core</span>
+                <h2 className="text-3xl font-black text-black uppercase tracking-tighter italic leading-none">
+                  Curriculum <br /> <span className="text-slate-300">Overview</span>
+                </h2>
+                <div className="h-[2px] w-12 mt-6 bg-black" />
               </div>
             </div>
           </div>
-          <div className="lg:col-span-9">
-            <h2 className="text-2xl md:text-4xl font-black text-black uppercase tracking-tighter italic mb-10 border-b border-slate-100 pb-6">Curriculum Overview</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          <div className="lg:col-span-8">
+            <div className="grid grid-cols-1 gap-4">
               {dept.curriculum.bullets.map((item, idx) => (
-                <div key={idx} className="group flex items-center gap-5 p-5 bg-white border border-slate-100 rounded-2xl transition-all duration-300 hover:border-black hover:shadow-xl hover:-translate-y-1">
-                  <div className="shrink-0 w-9 h-9 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center text-[10px] font-black text-slate-400 group-hover:bg-black group-hover:text-white transition-all italic">0{idx + 1}</div>
-                  <p className="text-slate-600 group-hover:text-black text-[13px] font-medium leading-snug transition-colors">{item}</p>
+                <div 
+                  key={idx} 
+                  className="group relative flex items-center gap-6 p-6 bg-white/50 backdrop-blur-sm border border-slate-100 rounded-2xl transition-all duration-500 hover:border-black hover:bg-white hover:shadow-[20px_20px_60px_-15px_rgba(0,0,0,0.05)] hover:-translate-x-2"
+                >
+                  <div 
+                    className="shrink-0 w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-xs font-black text-slate-400 group-hover:bg-black group-hover:text-white group-hover:rotate-[15deg] transition-all duration-500 italic"
+                  >
+                    {(idx + 1).toString().padStart(2, '0')}
+                  </div>
+
+                  <div className="flex-1">
+                    <p className="text-slate-600 group-hover:text-black text-sm md:text-base font-medium leading-relaxed transition-colors">
+                      {item}
+                    </p>
+                  </div>
+
+                  <div 
+                    className="w-1 h-0 group-hover:h-8 transition-all duration-500 rounded-full" 
+                    style={{ backgroundColor: dept.theme.accentHex }} 
+                  />
                 </div>
               ))}
             </div>
@@ -264,21 +302,83 @@ export default function MFEPage() {
       </section>
 
       {/* --- laboratories --- */}
-      <section id="laboratories" className="max-w-6xl mx-auto px-6 py-24 text-center">
-        <h2 className="text-3xl md:text-5xl font-black text-black uppercase tracking-tighter italic mb-16">{dept.laboratories.title}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {dept.laboratories.items.map((lab, idx) => (
-            <div key={idx} className="group bg-white border border-slate-100 rounded-2xl overflow-hidden hover:border-black transition-all duration-500">
-              <div className="aspect-[4/3] bg-slate-100 overflow-hidden">
-                <img src={dept.images.heroSmall1} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-              </div>
-              <div className="p-6">
-                <h3 className="font-black text-slate-900 uppercase italic text-[12px]">{lab}</h3>
+      <div className="w-full relative border-y border-slate-100 bg-[#fdfeff]">
+        <div 
+          className="absolute inset-0 pointer-events-none" 
+          style={{ 
+            backgroundImage: `
+              linear-gradient(to right, rgba(226, 232, 240, 0.5) 1px, transparent 1px),
+              linear-gradient(to bottom, rgba(226, 232, 240, 0.5) 1px, transparent 1px)
+            `, 
+            backgroundSize: '40px 40px' 
+          }} 
+        />
+        
+        <section id="laboratories" className="relative max-w-7xl mx-auto px-6 py-32 overflow-hidden">
+          <div className="relative z-10">
+            <div className="flex flex-col items-center mb-20 text-center">
+              <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.5em] block mb-4">Technical Facilities</span>
+              <h2 className="text-4xl md:text-6xl font-black text-black uppercase tracking-tighter italic leading-none">{dept.laboratories.title}</h2>
+              <div className="h-1 w-24 mt-8" style={{ backgroundColor: dept.theme.accentHex }} />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+              {dept.laboratories.items.map((lab, idx) => (
+                <div 
+                  key={idx} 
+                  onClick={() => setSelectedLab({ name: lab.name, image: lab.image || dept.images.heroSmall1 })}
+                  className="group relative bg-white border border-slate-100 rounded-3xl overflow-hidden transition-all duration-700 hover:border-black hover:shadow-2xl cursor-zoom-in"
+                >
+                  <div className="aspect-[16/10] bg-slate-50 overflow-hidden relative">
+                    <img 
+                      src={lab.image || dept.images.heroSmall1} 
+                      alt={lab.name}
+                      className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 flex items-center justify-center transition-all duration-500">
+                      <span className="text-white text-[10px] font-black uppercase tracking-widest opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all">View Full Image</span>
+                    </div>
+                  </div>
+                  <div className="p-8">
+                    <h3 className="font-black text-black uppercase italic text-sm tracking-tight">{lab.name}</h3>
+                    <div className="w-8 h-[2px] mt-2 transition-all duration-500 group-hover:w-full" style={{ backgroundColor: dept.theme.accentHex }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {selectedLab && (
+            <div 
+              className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12"
+              style={{ animation: 'fadeIn 0.3s ease-out' }}
+              onClick={() => setSelectedLab(null)}
+            >
+              <div className="absolute inset-0 bg-black/90 backdrop-blur-xl" />
+              
+              <div className="relative max-w-5xl w-full h-full flex flex-col items-center justify-center">
+                <button 
+                  className="absolute -top-12 right-0 text-white hover:text-slate-400 transition-colors flex items-center gap-2 uppercase font-black text-[10px] tracking-widest"
+                  onClick={() => setSelectedLab(null)}
+                >
+                  Close <span className="text-2xl">×</span>
+                </button>
+                
+                <img 
+                  src={selectedLab.image} 
+                  alt={selectedLab.name} 
+                  className="w-full max-h-[70vh] object-contain shadow-2xl rounded-lg"
+                />
+                
+                <div className="mt-8 text-center">
+                  <h3 className="text-white font-black uppercase italic text-2xl tracking-tighter">{selectedLab.name}</h3>
+                  <p className="text-slate-500 text-[10px] uppercase tracking-[0.4em] mt-2">BulSU Manufacturing Engineering Facility</p>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
+          )}
+        </section>
+      </div>
 
       {/* --- faculty --- */}
       <section id="faculty" className="max-w-6xl mx-auto px-6 py-20 bg-white border-y border-slate-100">
@@ -325,44 +425,131 @@ export default function MFEPage() {
       </section>
 
       {/* --- careers --- */}
-      <section id="careers" className="max-w-6xl mx-auto px-6 relative">
-        <div className="flex flex-col items-center justify-center mb-16 text-center">
-          <span className="text-[9px] font-black text-slate-300 uppercase tracking-[0.5em] block mb-4">Manufacturing Engineering</span>
-          <h2 className="text-3xl md:text-4xl font-black text-black uppercase tracking-tighter italic leading-none mb-6">{dept.careers.title}</h2>
-          <div className="flex items-center gap-4 mb-6">
-            <div className="h-[1px] w-10 bg-slate-100" /><div className="w-1 h-1 rounded-full bg-slate-200" /><div className="h-[1px] w-10 bg-slate-100" />
-          </div>
-          <p className="text-slate-500 text-[11px] md:text-xs font-medium italic max-w-md leading-relaxed">{dept.careers.subtitle}</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 justify-items-center">
-          {dept.careers.cards.map((card, idx) => (
-            <div key={idx} className="group relative w-full max-w-[280px] bg-white border border-slate-100 rounded-[2rem] p-10 transition-all duration-500 hover:border-black hover:shadow-2xl">
-              <div className="w-14 h-14 rounded-2xl bg-slate-50 flex items-center justify-center mb-8 group-hover:bg-black transition-all duration-500 group-hover:rotate-[5deg]">
-                <div className="text-slate-300 group-hover:text-white transition-colors">
-                  {idx === 0 && <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="square"><rect x="3" y="3" width="10" height="10" /><rect x="11" y="11" width="10" height="10" strokeDasharray="2 2" /></svg>}
-                  {idx === 1 && <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="square"><path d="M4 7h16M4 12h12M4 17h8" /><circle cx="18" cy="17" r="2" fill="currentColor" /></svg>}
-                  {idx === 2 && <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="square"><circle cx="12" cy="12" r="9" /><path d="M12 3v3m0 12v3M3 12h3m12 0h3" /></svg>}
-                </div>
-              </div>
-              <h3 className="text-xs font-black text-black uppercase tracking-[0.2em] mb-3">{card.title}</h3>
-              <p className="text-slate-500 text-[11px] leading-relaxed font-medium">{card.text}</p>
-              <div className="absolute top-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity"><div className="w-1.5 h-1.5 rounded-full bg-black animate-ping" /></div>
+      <section id="careers" className="relative max-w-7xl mx-auto px-6 py-32 overflow-hidden">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full blueprint-grid opacity-40 pointer-events-none" />
+        <div 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[120px] opacity-10 pointer-events-none" 
+          style={{ backgroundColor: dept.theme.accentHex }} 
+        />
+
+        <div className="relative z-10">
+          <div className="flex flex-col items-center justify-center mb-20 text-center">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-[1px] w-8 bg-slate-200" />
+              <span className="text-[9px] font-black text-slate-400 uppercase tracking-[0.5em] block">
+                Future Pathways
+              </span>
+              <div className="h-[1px] w-8 bg-slate-200" />
             </div>
-          ))}
+            
+            <h2 className="text-4xl md:text-5xl font-black text-black uppercase tracking-tighter italic leading-none mb-8">
+              {dept.careers.title}
+            </h2>
+            
+            <p className="text-slate-500 text-xs md:text-sm font-medium italic max-w-xl leading-relaxed">
+              {dept.careers.subtitle}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+            {dept.careers.cards.map((card, idx) => (
+              <div 
+                key={idx} 
+                className="group relative bg-white/80 backdrop-blur-sm border border-slate-100 rounded-[2.5rem] p-10 transition-all duration-700 hover:border-black hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.1)] hover:-translate-y-2"
+              >
+                <div className="absolute top-10 right-10 text-4xl font-black text-slate-50 opacity-0 group-hover:opacity-100 transition-opacity duration-700 italic">
+                  0{idx + 1}
+                </div>
+
+                <div 
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center mb-10 shadow-sm transition-all duration-500 group-hover:rotate-[10deg] group-hover:shadow-xl"
+                  style={{ backgroundColor: 'white', border: '1px solid #f1f5f9' }}
+                >
+                  <div className="text-slate-400 group-hover:text-black transition-colors duration-500">
+                    {idx === 0 && <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><rect x="3" y="3" width="10" height="10" /><rect x="11" y="11" width="10" height="10" strokeDasharray="2 2" /></svg>}
+                    {idx === 1 && <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><path d="M4 7h16M4 12h12M4 17h8" /><circle cx="18" cy="17" r="2" fill="currentColor" /></svg>}
+                    {idx === 2 && <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square"><circle cx="12" cy="12" r="9" /><path d="M12 3v3m0 12v3M3 12h3m12 0h3" /></svg>}
+                  </div>
+                </div>
+
+                <h3 className="text-[14px] font-black text-black uppercase tracking-widest mb-4 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: dept.theme.accentHex }} />
+                  {card.title}
+                </h3>
+                
+                <p className="text-slate-500 text-[12px] leading-relaxed font-medium mb-6">
+                  {card.text}
+                </p>
+
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[3px] bg-black transition-all duration-500 group-hover:w-1/3 rounded-t-full" />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* --- contact --- */}
-      <section id="contact" className="max-w-4xl mx-auto px-6 py-5 pt-28">
-        <div className="relative bg-black rounded-[2rem] p-10 md:p-14 text-center overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-700">
-          <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(#ffffff 0.5px, transparent 0.5px)', backgroundSize: '15px 15px' }} />
-          <div className="relative z-10 flex flex-col items-center">
-            <span className="text-[8px] font-black text-slate-500 uppercase tracking-[0.5em] mb-4">Department Contact</span>
-            <h2 className="text-2xl md:text-3xl font-black text-white uppercase italic tracking-tighter mb-4">Academic <span className="text-slate-500">Inquiry</span></h2>
-            <p className="text-slate-400 text-[11px] md:text-xs font-medium max-w-sm mx-auto leading-relaxed mb-8 italic">Insert short department contact or coordination placeholder text here.</p>
-            <button className="px-10 py-4 bg-white text-black rounded-xl font-black text-[10px] uppercase tracking-widest transition-all hover:bg-slate-100 hover:-translate-y-0.5 active:scale-95 shadow-lg">Send Message</button>
+      <section id="contact" className="max-w-5xl mx-auto px-6 py-24">
+        <div className="group relative bg-[#0a0a0a] rounded-[3rem] p-12 md:p-20 overflow-hidden shadow-2xl transition-all duration-700 hover:shadow-[0_50px_100px_-20px_rgba(0,0,0,0.4)]">
+          
+          <div className="absolute inset-0 opacity-[0.05] pointer-events-none blueprint-grid" />
+          <div 
+            className="absolute -top-24 -right-24 w-96 h-96 rounded-full blur-[120px] opacity-20 transition-opacity duration-700 group-hover:opacity-40" 
+            style={{ backgroundColor: dept.theme.accentHex }} 
+          />
+
+          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">
+            <div className="text-center lg:text-left flex-1">
+              <div className="flex items-center justify-center lg:justify-start gap-3 mb-6">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75" style={{ backgroundColor: dept.theme.accentHex }} />
+                  <span className="relative inline-flex rounded-full h-2 w-2" style={{ backgroundColor: dept.theme.accentHex }} />
+                </span>
+                <span className="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em]">
+                  Direct Coordination
+                </span>
+              </div>
+
+              <h2 className="text-3xl md:text-5xl font-black text-white uppercase italic tracking-tighter leading-none mb-6">
+                Ready to <br /> <span className="text-slate-500">Collaborate?</span>
+              </h2>
+              
+              <p className="text-slate-400 text-xs md:text-sm font-medium max-w-md leading-relaxed italic mb-0">
+                For academic inquiries, industry partnerships, or facility tours, reach out to the {dept.code} department office directly.
+              </p>
+            </div>
+
+            <div className="flex flex-col items-center lg:items-end gap-6">
+              <button 
+                className="group/btn relative px-12 py-6 bg-white rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-xl"
+              >
+                <div className="relative z-10 flex items-center gap-3">
+                  <span className="text-black font-black text-[11px] uppercase tracking-[0.2em]">Send Message</span>
+                  <svg 
+                    width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" 
+                    className="text-black transition-transform duration-300 group-hover/btn:translate-x-1"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </div>
+                <div 
+                  className="absolute inset-0 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300 opacity-10"
+                  style={{ backgroundColor: dept.theme.accentHex }}
+                />
+              </button>
+
+              <div className="flex flex-col items-center lg:items-end gap-2">
+                <span className="text-[9px] font-bold text-slate-600 uppercase tracking-widest">Available Mon—Fri</span>
+                <span className="text-[9px] font-bold text-slate-600 uppercase tracking-widest">8:00 AM — 5:00 PM</span>
+              </div>
+            </div>
           </div>
-          <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-white group-hover:w-full transition-all duration-1000" />
+
+          <div className="absolute bottom-0 left-0 w-full flex h-1.5 overflow-hidden">
+            <div className="h-full w-1/3 bg-white/10" />
+            <div className="h-full w-1/3 transition-all duration-1000 group-hover:w-full" style={{ backgroundColor: dept.theme.accentHex }} />
+            <div className="h-full w-1/3 bg-white/10" />
+          </div>
         </div>
       </section>
 
