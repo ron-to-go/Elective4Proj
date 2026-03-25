@@ -1,2 +1,20 @@
 /* Department-scoped custom CSS for IE page. */
+/* Custom sleek scrollbar for the Student Outcome Cards */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
 
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #e5e7eb; /* Light grey */
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* Changes the scrollbar color to the IE green accent when hovering anywhere on the card */
+.group:hover .custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #16a34a; 
+}
