@@ -15,11 +15,34 @@ export const IE = {
     peo: `${base}/IE Dept.png`,
   },
 
-  programOverview: {
-    heading: "Program Overview",
-    text: "Edit this Program Overview text for this department.",
-    stats: { nonTeaching: 0, faculty: 11, students: 567 },
-  },
+
+programOverview: {
+  heading: "About the Program",
+  text: "The Bachelor of Science in Industrial Engineering at Bulacan State University is an undergraduate degree focused on the design, improvement, and optimization of integrated systems. This interdisciplinary field prepares students to solve complex problems by blending engineering knowledge with advanced analysis and managerial principles.",
+  pillars: [
+    { 
+      icon: "⚙️", 
+      title: "Engineering Fundamentals", 
+      desc: "Apply core engineering concepts to complex system design and innovation." 
+    },
+    { 
+      icon: "📊", 
+      title: "Math & Statistics", 
+      desc: "Use advanced mathematics and data analysis to optimize processes and predict outcomes." 
+    },
+    { 
+      icon: "💼", 
+      title: "Business & Management", 
+      desc: "Integrate organizational strategies and economic decision-making to drive efficiency." 
+    },
+    { 
+      icon: "👥", 
+      title: "Social Sciences", 
+      desc: "Analyze and improve systems involving human factors, ergonomics, and social impact." 
+    },
+  ],
+  stats: { nonTeaching: 0, faculty: 11, students: 567 },
+},
 
   peo: {
     title: "Program Educational Objectives (PEO)",
