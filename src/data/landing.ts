@@ -39,44 +39,32 @@ export const landingPageData = {
       highlights: ["Lorem", "Ispum", "Dolor"],
       images: [
         { 
-          url: "/departments/MFE/watermark.png", 
+          url: "/departments/MFE/facilities/COE2.png", 
           caption: "Facility 1" 
         },
         { 
-          url: "/departments/MFE/watermark.png",  
+          url: "/departments/MFE/facilities/COE2-204.png",  
           caption: "Facility 2" 
         },
         { 
-          url: "/departments/MFE/watermark.png", 
+          url: "/departments/MFE/facilities/COE2-07.png", 
           caption: "Facility 3"  
         },
         { 
-          url: "/departments/MFE/watermark.png", 
+          url: "/departments/MFE/facilities/NATIVIDAD.png", 
           caption: "Facility 4" 
         },
         { 
-          url: "/departments/MFE/watermark.png", 
+          url: "/departments/MFE/facilities/NH401.png", 
           caption: "Facility 5" 
         },
         { 
-          url: "/departments/MFE/watermark.png", 
+          url: "/departments/MFE/facilities/NH402.png", 
           caption: "Facility 6" 
         },
         { 
-          url: "/departments/MFE/watermark.png", 
+          url: "/departments/MFE/facilities/NH403.png", 
           caption: "Facility 7" 
-        },
-        { 
-          url: "/departments/MFE/watermark.png", 
-          caption: "Facility 8" 
-        },
-        { 
-          url: "/departments/MFE/watermark.png", 
-          caption: "Facility 9" 
-        },
-        { 
-          url: "/departments/MFE/watermark.png", 
-          caption: "Facility 10" 
         },
       ],
     },
