@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Building2, CalendarDays, Send, Users, ArrowUpRight } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { landingPageData, type LandingPageData } from "../data/landing";
