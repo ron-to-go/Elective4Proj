@@ -1,46 +1,752 @@
-import { useEffect, useMemo, useState, type ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { Building2, CalendarDays, Send, Users, ArrowUpRight } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { landingPageData, type LandingPageData } from "../data/landing";
 import {
   loadLandingDraft,
   mergeLandingWithOverrides,
 } from "../lib/landingAdmin";
+import { Mail } from "lucide-react";
+
+import CE_Img from '../assets/Civil_Engineering.jpg';
+import CPE_Img from '../assets/Computer_Engineering.jpg';
+import ECE_Img from '../assets/Electronics_Engineering.jpg';
+import EE_Img from '../assets/Electrical_Engineering.jpg';
+import IE_Img from '../assets/Industrial_Engineering.jpg';
+import ME_Img from '../assets/Mechanical_Engineering.jpg';
+import MEE_Img from '../assets/Mechatronics_Engineering.jpg';
+import MFE_Img from '../assets/Manufacturing_Engineering.jpg';
 
 type Sections = LandingPageData["sections"];
+type HeroStat = LandingPageData["hero"]["stats"][number];
 
-function MissionVisionSection({ data }: { data: Sections["missionVision"] }) {
+const heroStatIcons: Record<HeroStat["icon"], typeof Send> = {
+  send: Send,
+  building: Building2,
+  calendar: CalendarDays,
+  users: Users,
+};
+
+const departments = [
+  { id: 'CE', name: 'Civil Engineering', description: 'Advancing infrastructure with precision and sustainable innovation.', image: CE_Img },
+  { id: 'CPE', name: 'Computer Engineering', description: 'Bridging software and hardware to power the digital future.', image: CPE_Img },
+  { id: 'ECE', name: 'Electronics Engineering', description: 'Innovating communication systems and electronic technologies.', image: ECE_Img },
+  { id: 'EE', name: 'Electrical Engineering', description: 'Generating power solutions and efficient energy systems.', image: EE_Img },
+  { id: 'IE', name: 'Industrial Engineering', description: 'Optimizing complex processes and integrated systems.', image: IE_Img },
+  { id: 'ME', name: 'Mechanical Engineering', description: 'Designing the machinery and thermal systems of tomorrow.', image: ME_Img },
+  { id: 'MEE', name: 'Mechatronics Engineering', description: 'Streamlining production through advanced automation.', image: MEE_Img },
+  { id: 'MFE', name: 'Manufacturing Engineering', description: 'Specialized manufacturing processes and material science.', image: MFE_Img },
+];
+
+function DepartmentGrid() {
+  const navigate = useNavigate();
   return (
-    <section id="mission-vision" className="max-w-6xl mx-auto px-6 py-10">
-      <SectionCard data={data}>
-        <p className="mt-3 text-sm text-gray-600">Mission: {data.missionText}</p>
-        <p className="mt-1 text-sm text-gray-600">Vision: {data.visionText}</p>
-      </SectionCard>
+    <section id="programs-grid" className="max-w-6xl mx-auto px-6 py-10">
+      <div className="relative overflow-hidden rounded-[2.5rem] bg-white border border-gray-100 p-8 md:p-12 shadow-[0_8px_30px_rgba(169,0,0,0.06)]">
+        
+        <div className="absolute inset-0 z-0">
+          <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-red-500 opacity-[0.03] blur-[80px] pointer-events-none"></div>
+          <div className="absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-orange-400 opacity-[0.03] blur-[80px] pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:30px_30px] opacity-40" />
+        </div>
+
+        <div className="relative z-10">
+          <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-10 border-b border-gray-100 pb-8">
+            <div className="space-y-1">
+              <p className="text-[10px] font-black uppercase tracking-[0.4em] text-orange-500">college of engineering</p>
+              <h2 className="text-4xl md:text-6xl font-black tracking-tighter leading-none italic">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a90000] to-orange-500 uppercase">Engineering</span>
+                <br />
+                <span className="not-italic text-gray-900 uppercase">Departments</span>
+              </h2>
+            </div>
+            <div className="max-w-xs">
+              <p className="text-gray-400 text-[13px] font-medium leading-relaxed border-l-2 border-[#a90000] pl-4">
+                Fostering specialized expertise and technical mastery across our diverse engineering disciplines at Bulacan State University.
+              </p>
+            </div>
+          </div>
+
+          {/* Grid gaps tightened to 6 for a more 'together' look */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {departments.map((dept) => (
+              <div 
+                key={dept.id} 
+                className="group cursor-pointer relative" 
+                onClick={() => navigate(`/dept/${dept.id}`)}
+              >
+                {/* --- SHARP RECTANGULAR BORDER --- */}
+                <div className="relative transition-all duration-500 border border-gray-200 group-hover:border-transparent">
+                  
+                  {/* Living Border Gradient (Sharp Edges) */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-[#a90000] via-orange-400 to-white p-[2px]" />
+
+                  {/* Inner Content (Rectangle) */}
+                  <div className="relative aspect-square bg-white z-10 transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-1">
+                    <img 
+                      src={dept.image} 
+                      alt={dept.name} 
+                      className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105" 
+                    />
+                    
+                    {/* Minimalist Top Badge */}
+                    <div className="absolute top-0 right-0 px-3 py-1 bg-black/60 backdrop-blur-sm text-white opacity-0 group-hover:opacity-100 transition-all duration-500 z-20">
+                      <span className="text-[9px] font-bold uppercase tracking-widest">{dept.id}</span>
+                    </div>
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
+                    
+                    <div className="absolute top-4 left-4 h-8 w-8 bg-[#a90000] text-white flex items-center justify-center scale-0 group-hover:scale-100 transition-transform duration-500 z-20">
+                      <ArrowUpRight className="h-4 w-4" />
+                    </div>
+
+                    <div className="absolute bottom-0 left-0 w-full p-4 text-white z-10">
+                      <h3 className="text-lg font-black leading-tight uppercase tracking-tight group-hover:text-orange-400 transition-colors">
+                        {dept.name}
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Descriptive Text Content */}
+                <div className="mt-4 px-1 space-y-2">
+                   <p className="text-[11px] text-gray-500 leading-snug line-clamp-2 font-medium group-hover:text-gray-800 transition-colors">
+                    {dept.description}
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <div className="h-[2px] w-4 bg-gray-200 group-hover:w-10 group-hover:bg-[#a90000] transition-all duration-500" />
+                    <span className="text-[10px] font-black text-[#a90000] opacity-0 group-hover:opacity-100 uppercase tracking-widest transition-all">Explore</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
 
-function DepartmentGridSection({ data }: { data: Sections["departmentGrid"] }) {
+function MissionVisionSection({ data }: { data: Sections["missionVision"] }) {
   return (
-    <section id="department-grid" className="max-w-6xl mx-auto px-6 py-10">
-      <SectionCard data={data}>
-        <p className="mt-3 text-sm text-gray-600">{data.introText}</p>
-      </SectionCard>
+    <section id="mission-vision" className="max-w-6xl mx-auto px-6 py-16">
+      <div className="relative">
+        {/* Section Header */}
+        <div className="mb-12">
+          <p className="text-sm font-bold tracking-[0.2em] text-orange-500 uppercase mb-2">
+            COLLEGE OF ENGINEERING
+          </p>
+          <h2 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#a90000] to-orange-500 tracking-tighter">
+            {data.title}
+          </h2>
+        </div>
+
+        {/* Two-Column Grid for Separate Hover Effects */}
+        <div className="grid md:grid-cols-2 gap-8 relative z-10">
+
+          {/* Mission Card */}
+          <div className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white p-8 md:p-10 transition-all duration-500 hover:-translate-y-3 hover:border-orange-300
+      hover:shadow-[0_20px_50px_rgba(169,0,0,0.12)]">
+            {/* Lively Animated Background Glow */}
+            <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[#a90000] opacity-0 blur-[60px] transition-opacity duration-500 group-hover:opacity-20 pointer-events-none"></div>
+
+            {/* Top Border Animation */}
+            <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#a90000] to-orange-500 transform scale-x-0 transition-transform duration-500 origin-left
+      group-hover:scale-x-100 rounded-t-3xl"></div>
+
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="h-12 w-1.5 bg-[#a90000] rounded-full"></div>
+                <h3 className="text-3xl font-black text-gray-900 group-hover:text-[#a90000] transition-colors duration-300 uppercase tracking-widest">
+                  Mission
+                </h3>
+              </div>
+              <p className="text-xl text-gray-600 leading-relaxed font-medium transition-colors duration-300 group-hover:text-gray-900">
+                {data.missionText}
+              </p>
+            </div>
+
+            {/* Decorative Icon or Watermark */}
+            <div className="absolute bottom-4 right-6 text-8xl font-black text-gray-50 select-none transition-colors duration-500 group-hover:text-orange-50">
+              M
+            </div>
+          </div>
+
+          {/* Vision Card */}
+          <div className="group relative overflow-hidden rounded-3xl border border-gray-100 bg-white p-8 md:p-10 transition-all duration-500 hover:-translate-y-3 hover:border-orange-300
+      hover:shadow-[0_20px_50px_rgba(234,88,12,0.12)]">
+            {/* Lively Animated Background Glow */}
+            <div className="absolute -left-10 -bottom-10 h-40 w-40 rounded-full bg-orange-400 opacity-0 blur-[60px] transition-opacity duration-500 group-hover:opacity-20
+      pointer-events-none"></div>
+
+            {/* Top Border Animation */}
+            <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-orange-500 to-[#a90000] transform scale-x-0 transition-transform duration-500 origin-right
+      group-hover:scale-x-100 rounded-t-3xl"></div>
+
+            <div className="relative z-10">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="h-12 w-1.5 bg-orange-500 rounded-full"></div>
+                <h3 className="text-3xl font-black text-gray-900 group-hover:text-orange-600 transition-colors duration-300 uppercase tracking-widest">
+                  Vision
+                </h3>
+              </div>
+              <p className="text-xl text-gray-600 leading-relaxed font-medium transition-colors duration-300 group-hover:text-gray-900">
+                {data.visionText}
+              </p>
+            </div>
+
+            {/* Decorative Icon or Watermark */}
+            <div className="absolute bottom-4 right-6 text-8xl font-black text-gray-50 select-none transition-colors duration-500 group-hover:text-red-50">
+              V
+            </div>
+          </div>
+
+        </div>
+      </div>
     </section>
   );
 }
 
 function NewsSection({ data }: { data: Sections["news"] }) {
+  const sortedItems = useMemo(() => {
+    if (!data.items) return [];
+    return [...data.items].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }, [data.items]);
+
+  const featuredList = sortedItems.slice(0, 4) || [];
+  const [current, setCurrent] = useState(0);
+  const [manualTick, setManualTick] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [activeItem, setActiveItem] = useState<typeof sortedItems[number] | null>(null);
+  const itemsPerPage = 6;
+
+  const wrappedCurrent =
+    featuredList.length > 0
+      ? ((current % featuredList.length) + featuredList.length) %
+        featuredList.length
+      : 0;
+  const currentItem = featuredList[wrappedCurrent];
+
+  const gridPageCount = Math.max(1, Math.ceil(sortedItems.length / itemsPerPage));
+  const safeCurrentPage = Math.min(currentPage, gridPageCount - 1);
+  const visibleGridItems = sortedItems.slice(
+    safeCurrentPage * itemsPerPage,
+    (safeCurrentPage + 1) * itemsPerPage
+  );
+
+  const goTo = (index: number) => {
+    if (index >= 0 && index < featuredList.length) {
+      setCurrent(index);
+      setManualTick((n) => n + 1);
+    }
+  };
+
+  const handlePageChange = (nextPage: number) => {
+    setCurrentPage(nextPage);
+    document.getElementById("coe-news")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  useEffect(() => {
+    if (featuredList.length <= 1) return;
+
+    const intervalId = window.setInterval(() => {
+      setCurrent((prev) => (prev + 1) % featuredList.length);
+    }, 3000);
+
+    return () => window.clearInterval(intervalId);
+  }, [featuredList.length, manualTick]);
+
+  const isFirstHistoryRef = useRef(true);
+
+useEffect(() => {
+  if (isFirstHistoryRef.current) {
+    isFirstHistoryRef.current = false;
+    return;
+  }
+  if (currentPage === 0) return;
+
+  const anchor = document.getElementById("coe-news");
+  if (!anchor) return;
+
+  anchor.scrollIntoView({ behavior: "smooth", block: "start" });
+}, [currentPage]);
+  
   return (
-    <section id="news" className="max-w-6xl mx-auto px-6 py-10">
-      <SectionCard data={data}>
-        <div className="mt-3 space-y-1 text-sm text-gray-600">
-          {data.items.map((item, idx) => (
-            <p key={idx}>
-              {item.date} - {item.title}
-            </p>
-          ))}
+    <section id="news" className="bg-[#FCFCFD]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10">
+        {/* Hero */}
+        <div className="relative bg-[#F4F5F6] rounded-t-[24px] overflow-hidden">
+          {/* Background Image */}
+          {data?.backgroundImage && (
+            <div
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${data.backgroundImage})` }}
+            />
+          )}
+
+          {/* Gradient Overlay */}
+          {data?.overlayImage && (
+            <div
+              className="absolute inset-0 bg-cover bg-center opacity-80"
+              style={{ backgroundImage: `url(${data.overlayImage})` }}
+            />
+          )}
+
+          {/* Content */}
+          <div className="relative z-10 flex flex-col items-center justify-center text-center gap-8 px-4 py-10 sm:py-12">
+            {/* Frame */}
+            <div className="flex flex-col items-center gap-4">
+              {/* Hero Title */}
+              <h1
+                className="
+                  font-bold text-white tracking-[-0.02em]
+                  text-4xl leading-tight
+                  sm:text-5xl sm:leading-[1.1]
+                  md:text-6xl md:leading-[1.1]
+                  lg:text-[72px] lg:leading-20
+                "
+              >
+                {data?.title || "COE NEWS"}
+              </h1>
+            </div>
+          </div>
         </div>
-      </SectionCard>
+        {/* Featured News Card with Pagination */}
+        {currentItem && (
+          <div className="mt-8">
+            {/* CARD */}
+            <div className="relative w-full h-55 sm:h-80 md:h-105 lg:h-129.5 rounded-t-[6px] overflow-hidden transition-all duration-500 ease-out">
+              {/* Image */}
+              <div
+                className="absolute inset-0 bg-cover bg-center transition-all duration-500 ease-in-out"
+                style={{ backgroundImage: `url(${currentItem.image})` }}
+              />
+
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-black/60" />
+
+              <div className="absolute inset-0 flex flex-col justify-between p-3 sm:p-4">
+                {/* Badge */}
+                <div>
+                  <span className="inline-flex border border-[#EBEEF3] rounded-[3px] px-4 py-1 sm:mx-8 sm:my-4 text-[#EBEEF3] text-xs sm:text-sm md:text-base font-medium">
+                    {"RECENT"}
+                  </span>
+                </div>
+
+                {/* Text */}
+                <div className="text-white flex flex-col gap-2 sm:gap-3 max-w-3xl sm:px-8 overflow-hidden transition-all duration-500 ease-in-out">
+                  {(currentItem.author?.name || currentItem.date) && (
+                    <div className="flex items-center gap-2 text-[#F9FAFC] text-xs sm:text-sm md:text-base">
+                      {currentItem.author?.name && (
+                        <span>{currentItem.author.name}</span>
+                      )}
+                      {currentItem.author?.name && currentItem.date && (
+                        <span>•</span>
+                      )}
+                      {currentItem.date && <span>{currentItem.date}</span>}
+                    </div>
+                  )}
+
+                  {currentItem.title && (
+                    <h2
+                      className="font-bold uppercase text-[#F9FAFC]
+                      text-lg sm:text-xl md:text-2xl lg:text-[36px]
+                      md:leading-10.75 line-clamp-2"
+                    >
+                      {currentItem.title}
+                    </h2>
+                  )}
+
+                  {currentItem.description && (
+                    <p
+                      className="font-medium text-white
+                      text-sm sm:text-base md:text-lg lg:text-[20px]
+                      md:leading-7 line-clamp-3"
+                    >
+                      {currentItem.description}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* PAGINATION */}
+            {featuredList.length > 1 && (
+              <div className="flex items-center justify-center sm:justify-end sm:pr-8 gap-3 sm:gap-4 mt-6">
+                {/* PREV */}
+                <button
+                  onClick={() => goTo(current - 1)}
+                  disabled={current === 0}
+                  className={`
+                    w-12.5 h-10
+                    flex items-center justify-center rounded-[3px]
+                    ${current === 0 ? "bg-[#BAB8B8]" : "bg-[#262626] cursor-pointer active:scale-90 hover:scale-110 transition duration-300"}
+                  `}
+                >
+                  <span className="border-2 border-[#EBEEF3] w-3 h-3 border-t-0 border-r-0 rotate-45" />
+                </button>
+
+                {/* NUMBERS */}
+                <div className="flex items-center gap-2 sm:gap-3">
+                  {featuredList.map((_, index) => {
+                    const isActive = index === current;
+
+                    return (
+                      <button
+                        key={index}
+                        onClick={() => goTo(index)}
+                        className={`
+                          flex items-center justify-center
+                          w-7.5 h-7.5 sm:w-8.75 sm:h-8.75
+                          text-sm sm:text-base md:text-lg
+                          ${
+                            isActive
+                              ? "bg-[#262626] text-white rounded-full"
+                              : "text-[rgba(38,38,38,0.61)] cursor-pointer active:scale-90 hover:scale-120"
+                          }
+                        `}
+                      >
+                        {index + 1}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* NEXT */}
+                <button
+                  onClick={() => goTo(current + 1)}
+                  disabled={current === featuredList.length - 1}
+                  className={`
+                    w-12.5 h-10
+                    flex items-center justify-center rounded-[3px]
+                    ${
+                      current === featuredList.length - 1
+                        ? "bg-[#BAB8B8]"
+                        : "bg-[#262626] cursor-pointer active:scale-90 hover:scale-110 transition duration-300"
+                    }
+                  `}
+                >
+                  <span className="border-2 border-[#EBEEF3] w-3 h-3 border-b-0 border-l-0 rotate-45" />
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* NEWS GRID SECTION */}
+        {sortedItems && (
+          <div className="mt-12">
+            {/* Heading */}
+            <div className="mb-6 flex items-center justify-between gap-3">
+              <h2
+                id="coe-news"
+                className="font-bold text-[#262626] text-xl sm:text-2xl md:text-[28px] mb-0"
+              >
+                COE NEWS
+              </h2>
+              <a
+                href="#coe-news"
+                aria-label="Scroll to COE NEWS section"
+                className="hover:inline-flex items-center justify-center rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-sm font-semibold text-[#262626] hover:bg-gray-100"
+              >
+                ↗
+              </a>
+            </div>
+
+            {/* Grid */}
+            <div
+              className="
+                grid sm:gap-6
+                grid-cols-2
+                sm:grid-cols-2
+                lg:grid-cols-3
+              "
+            >
+              {visibleGridItems.map((item, index) => (
+                <div
+                  key={index}
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => setActiveItem(item)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      setActiveItem(item);
+                    }
+                  }}
+                  className="flex flex-col gap-3 hover:scale-105 transition-all duration-300 ease-out hover:shadow-lg p-3 rounded-lg cursor-pointer active:scale-90"
+                >
+                  {/* Image Card */}
+                  <div className="relative w-full h-50 sm:h-55 md:h-62 rounded-[6px] overflow-hidden">
+                    {/* Image */}
+                    <div
+                      className="absolute inset-0 bg-cover bg-center"
+                      style={{ backgroundImage: `url(${item.image})` }}
+                    />
+
+                    {/* Optional dark overlay for readability */}
+                    <div className="absolute inset-0 bg-black/20" />
+
+                    {/* Label */}
+                    {item.label && (
+                      <div className="absolute top-2 right-2 border border-[#EBEEF3] rounded-lg px-2 py-0.5 bg-black/40">
+                        <span className="text-[#EBEEF3] text-[10px] sm:text-[12px] font-normal capitalize">
+                          {item.label}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* ✅ Avatar + Name */}
+                  {item.author && (
+                    <div className="flex items-center gap-3 mt-1">
+                      {/* Avatar */}
+                      <div
+                        className="w-11 h-11 rounded-full bg-cover bg-center"
+                        style={{
+                          backgroundImage: `url(${item.author.avatar})`,
+                        }}
+                      />
+
+                      {/* Name */}
+                      <span className="text-black text-sm font-medium tracking-[0.1px]">
+                        {item.author.name}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* ✅ TEXT CONTENT */}
+                  <div className="flex flex-col gap-1">
+                    {/* Date */}
+                    {item.date && (
+                      <p className="text-[rgba(38,38,38,0.6)] text-xs sm:text-sm font-medium">
+                        {item.date}
+                      </p>
+                    )}
+
+                    {/* Title */}
+                    {item.title && (
+                      <h3
+                        className="
+                          text-[#262626]
+                          font-semibold
+                          text-base sm:text-lg md:text-[22px]
+                          leading-snug
+                          line-clamp-2
+                        "
+                      >
+                        {item.title}
+                      </h3>
+                    )}
+
+                    {/* Description */}
+                    {item.description && (
+                      <p
+                        className="
+                          text-[#696868]
+                          font-medium
+                          text-sm sm:text-base
+                          leading-relaxed
+                          line-clamp-3
+                        "
+                      >
+                        {item.description}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Grid pagination */}
+            {gridPageCount > 1 && (
+              <div className="mt-6 flex items-center justify-center gap-3 sm:gap-4">
+                <button
+                  onClick={() => handlePageChange(Math.max(0, currentPage - 1))}
+                  disabled={currentPage === 0}
+                  className={`
+                    w-12.5 h-10
+                    flex items-center justify-center rounded-[3px]
+                    ${currentPage === 0 ? "bg-[#BAB8B8]" : "bg-[#262626] cursor-pointer active:scale-90 hover:scale-110 transition duration-300"}
+                  `}
+                >
+                  <span className="border-2 border-[#EBEEF3] w-3 h-3 border-t-0 border-r-0 rotate-45" />
+                </button>
+
+                {Array.from({ length: gridPageCount }).map((_, pageIndex) => (
+                  <button
+                    key={pageIndex}
+                    onClick={() => handlePageChange(pageIndex)}
+                    className={`
+                          flex items-center justify-center
+                          w-7.5 h-7.5 sm:w-8.75 sm:h-8.75
+                          text-sm sm:text-base md:text-lg
+                          ${
+                            currentPage === pageIndex
+                              ? "bg-[#262626] text-white rounded-full"
+                              : "text-[rgba(38,38,38,0.61)] cursor-pointer active:scale-90 hover:scale-120"
+                          }
+                        `}
+                  >
+                    {pageIndex + 1}
+                  </button>
+                ))}
+
+                <button
+                  onClick={() =>
+                    handlePageChange(
+                      Math.min(gridPageCount - 1, currentPage + 1),
+                    )
+                  }
+                  disabled={currentPage === gridPageCount - 1}
+                  className={`
+                    w-12.5 h-10
+                    flex items-center justify-center rounded-[3px]
+                    ${currentPage === gridPageCount - 1 ? "bg-[#BAB8B8]" : "bg-[#262626] cursor-pointer active:scale-90 hover:scale-110 transition duration-300"}
+                  `}
+                >
+                  <span className="border-2 border-[#EBEEF3] w-3 h-3 border-b-0 border-l-0 rotate-45" />
+                </button>
+              </div>
+            )}
+
+            {/* Modal for grid item detail */}
+            {activeItem && (
+              <div
+                className="fixed inset-0 z-50 bg-black/60 grid place-items-center p-4"
+                onClick={() => setActiveItem(null)}
+              >
+                <div
+                  className="max-w-xl w-full rounded-2xl bg-white p-6 shadow-2xl overflow-auto max-h-[90vh]"
+                  onClick={(e) => e.stopPropagation()}
+                  role="dialog"
+                  aria-modal="true"
+                  aria-labelledby="news-item-title"
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <h3
+                      id="news-item-title"
+                      className="text-xl font-bold text-gray-900"
+                    >
+                      {activeItem.title}
+                    </h3>
+                    <button
+                      onClick={() => setActiveItem(null)}
+                      className="text-gray-500 hover:text-red-500 cursor-pointer text-2xl hover:font-bold hover:scale-110 active:scale-90 transition duration-300"
+                      aria-label="Close details"
+                    >
+                      ✕
+                    </button>
+                  </div>
+
+                  {activeItem.image && (
+                    <div
+                      className="mb-4 h-52 rounded-lg bg-cover bg-center"
+                      style={{ backgroundImage: `url(${activeItem.image})` }}
+                    />
+                  )}
+
+                  <div className="mb-3 space-y-2 text-gray-700">
+                    {activeItem.label && (
+                      <span className="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white bg-[#262626] rounded-full">
+                        {activeItem.label}
+                      </span>
+                    )}
+
+                    <div className="flex items-center gap-3">
+                      {activeItem.author?.avatar && (
+                        <div
+                          className="w-10 h-10 rounded-full bg-cover bg-center"
+                          style={{
+                            backgroundImage: `url(${activeItem.author.avatar})`,
+                          }}
+                        />
+                      )}
+                      <div>
+                        {activeItem.author?.name && (
+                          <p className="text-sm font-medium text-gray-900">
+                            {activeItem.author.name}
+                          </p>
+                        )}
+                        {activeItem.date && (
+                          <p className="text-xs text-gray-500">
+                            {activeItem.date}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+
+                    {activeItem.description && (
+                      <p className="text-base leading-relaxed text-gray-700">
+                        {activeItem.description}
+                      </p>
+                    )}
+
+                    {activeItem.hashtags && (
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {activeItem.hashtags.map((tag, idx) => (
+                          <span
+                            key={idx}
+                            className="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider text-white bg-[#262626] rounded-full"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {activeItem.links && (
+                      <div className="mt-4">
+                        <p className="text-sm font-semibold text-gray-900 mb-2">
+                          Useful links
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {activeItem.links.map((link, idx) => (
+                            <a
+                              key={idx}
+                              href={link.href}
+                              target="_blank"
+                              rel="noreferrer noopener"
+                              aria-label={`Open ${link.label} in new tab`}
+                              className="flex items-center p-3 border border-gray-200 rounded-xl bg-white text-left shadow-sm hover:shadow-md transition transform hover:-translate-y-0.5 active:scale-90"
+                            >
+                              <span className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 mr-3 overflow-hidden">
+                                {link.icon ? (
+                                  <img
+                                    src={link.icon}
+                                    alt={`${link.label} icon`}
+                                    className="w-10 h-10 object-contain"
+                                  />
+                                ) : (
+                                  "↗"
+                                )}
+                              </span>
+
+                              <div className="min-w-0">
+                                <p className="text-sm font-semibold text-gray-900">
+                                  {link.label}
+                                </p>
+                                {link.description && (
+                                  <p className="text-xs text-gray-500 whitespace-pre-line">
+                                    {link.description}
+                                  </p>
+                                )}
+                              </div>
+
+                              <span className="ml-auto text-gray-400 text-sm">
+                                ↗
+                              </span>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </section>
   );
 }
@@ -176,28 +882,137 @@ function FacilitiesSection({ data }: { data: Sections["facilities"] }) {
 
 function StatisticsSection({ data }: { data: Sections["statistics"] }) {
   return (
-    <section id="statistics" className="max-w-6xl mx-auto px-6 py-10">
-      <SectionCard data={data}>
-        <div className="mt-3 flex flex-wrap items-center justify-center gap-4 text-sm text-gray-700">
-          {data.stats.map((item, idx) => (
-            <span key={idx}>
-              <strong>{item.value}</strong> {item.label}
-            </span>
+    <section id="statistics" className="max-w-6xl mx-auto px-6 py-16">
+      <div className="relative overflow-hidden rounded-3xl bg-white border border-gray-100 p-8 md:p-12 shadow-[0_8px_30px_rgba(169,0,0,0.06)]">
+        <div className="absolute -right-20 -top-20 h-72 w-72 rounded-full bg-red-500 opacity-10 blur-[80px] pointer-events-none"></div>
+        <div className="absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-orange-400 opacity-10 blur-[80px] pointer-events-none"></div>
+        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-end justify-between gap-6 mb-12 border-b border-gray-100 pb-8">
+          <div>
+            <p className="text-sm font-bold tracking-widest text-orange-500 uppercase mb-2">College Enrollment</p>
+            <div className="flex items-baseline gap-4">
+              <h2 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#a90000] to-orange-500 tracking-tighter">
+                {data.totalStudents}
+              </h2>
+              <span className="text-xl md:text-2xl font-bold text-gray-700">Total Students</span>
+            </div>
+          </div>
+          <div className="text-left md:text-right max-w-sm">
+            <p className="text-gray-500 text-sm leading-relaxed">
+              Empowering the next generation of engineers with excellence and passion at Bulacan State University.
+            </p>
+          </div>
+        </div>
+        <div className="relative z-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
+          {data.departmentStats.map((dept, idx) => (
+            <div key={idx} className="group relative flex flex-col justify-between rounded-2xl border border-gray-100 bg-white p-6 transition-all duration-300 hover:-translate-y-2 hover:border-orange-300 hover:shadow-[0_15px_30px_rgba(234,88,12,0.12)]">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#a90000] to-orange-500 transform scale-x-0 transition-transform duration-300 group-hover:scale-x-100 rounded-t-2xl"></div>
+              <div>
+                <h3 className="text-2xl font-black text-gray-900 group-hover:text-[#a90000] transition-colors">{dept.dept}</h3>
+                <p className="mt-1 mb-3 text-[10px] sm:text-xs font-bold text-gray-400 uppercase tracking-widest leading-tight">{dept.fullName}</p>
+                <p className="mt-1 text-3xl font-extrabold text-gray-800">{dept.students} <span className="text-xs font-semibold tracking-widest text-gray-400 uppercase">Students</span></p>
+              </div>
+              <div className="mt-6 pt-4 border-t border-gray-50">
+                {dept.hasBoardExam ? (
+                  <div>
+                    <p className="flex items-center gap-2 text-lg font-black text-orange-600 leading-none">
+                      <span className="h-2 w-2 animate-pulse rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.8)]"></span>
+                      {dept.passingRate}
+                    </p>
+                    <p className="mt-1.5 text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-tight">Board Exam Pass Rate <br/><span className="text-orange-500/80">({dept.latestExamDate})</span></p>
+                  </div>
+                ) : (
+                  <div className="py-1"><p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Non-Board Program</p></div>
+                )}
+              </div>
+            </div>
           ))}
         </div>
-      </SectionCard>
+      </div>
     </section>
   );
 }
 
 function ContactSection({ data }: { data: Sections["contact"] }) {
+  // TODO: use data
+  data = data; // doing it this way for now so that the website actually builds...
+
+  const contacts = [
+    {
+      program: "Bachelor of Science in Civil Engineering",
+      email: "radgerteddy.manuel@bulsu.edu.ph",
+    },
+    {
+      program: "Bachelor of Science in Computer Engineering",
+      email: "marialorena.villena@ms.bulsu.edu.ph",
+    },
+    {
+      program: "Bachelor of Science in Electrical Engineering",
+      email: "eleazar.nabong@ms.bulsu.edu.ph",
+    },
+    {
+      program: "Bachelor of Science in Electronics Engineering",
+      email: "donald.lapiguera@bulsu.edu.ph",
+    },
+    {
+      program: "Bachelor of Science in Industrial Engineering",
+      email: "jeremylaurence.banez@bulsu.edu.ph",
+    },
+    {
+      program: "Bachelor of Science in Mechanical Engineering",
+      email: "aldrin.bernardo@bulsu.edu.ph",
+    },
+    {
+      program: "Bachelor of Science in Manufacturing Engineering",
+      email: "mfe@bulsu.edu.ph",
+    },
+    {
+      program: "Bachelor of Science in Mechatronics Engineering",
+      email: "arvinjulius.tullao@bulsu.edu.ph",
+    },
+  ];
+
   return (
-    <section id="contact" className="max-w-6xl mx-auto px-6 py-10">
-      <SectionCard data={data}>
-        <p className="mt-3 text-sm text-gray-600">Email: {data.email}</p>
-        <p className="text-sm text-gray-600">Phone: {data.phone}</p>
-        <p className="text-sm text-gray-600">Address: {data.address}</p>
-      </SectionCard>
+    <section id="contact" className="max-w-6xl mx-auto px-6 py-16">
+      <div className="rounded-3xl bg-white border border-gray-100 p-8 md:p-12 shadow-[0_8px_30px_rgba(169,0,0,0.06)]">
+
+        <div className="mb-10 border-b border-gray-100 pb-6">
+          <p className="text-sm font-bold tracking-widest text-orange-500 uppercase mb-2">
+            Contact Directory
+          </p>
+          <h2 className="text-3xl md:text-4xl font-black text-[#a90000]">
+            College of Engineering
+          </h2>
+          <p className="mt-2 text-sm text-gray-500">
+            Bulacan State University
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          {contacts.map((item, idx) => (
+            <div
+              key={idx}
+              className="group rounded-2xl border border-gray-100 bg-white p-6 transition-all duration-300 hover:-translate-y-2 hover:border-orange-400 hover:shadow-[0_15px_30px_rgba(234,88,12,0.12)]"
+            >
+              <h3 className="text-lg font-bold text-gray-900 group-hover:text-[#a90000] transition-colors">
+                {item.program}
+              </h3>
+
+              <div className="mt-3 flex items-center gap-3 text-sm text-gray-600">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-orange-50 group-hover:bg-orange-100 transition">
+                  <Mail className="h-4 w-4 text-orange-500" strokeWidth={2} />
+                </div>
+                <span className="leading-none">{item.email}</span>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-gray-50">
+                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
+                  Bulacan State University
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
@@ -206,14 +1021,10 @@ function LandingFooterSection({ data }: { data: Sections["footer"] }) {
   return (
     <footer id="footer" className="border-t bg-gray-100">
       <div className="max-w-6xl mx-auto px-6 py-8 text-sm text-gray-500">
-        <p>
-          {data.statusLabel}: {data.assignedGroup}
-        </p>
+        <p>{data.statusLabel}: {data.assignedGroup}</p>
         <div className="mt-3 flex flex-wrap gap-4">
           {data.links.map((link, idx) => (
-            <a key={idx} href={link.href} className="text-sm text-gray-700 underline">
-              {link.label}
-            </a>
+            <a key={idx} href={link.href} className="text-sm text-gray-700 underline">{link.label}</a>
           ))}
         </div>
       </div>
@@ -221,15 +1032,10 @@ function LandingFooterSection({ data }: { data: Sections["footer"] }) {
   );
 }
 
-function SectionCard({
-  data,
-  children,
-}: { data: { id: string; title: string; assignedGroup: string; statusLabel: string }; children?: ReactNode }) {
+function SectionCard({ data, children }: { data: { id: string; title: string; assignedGroup: string; statusLabel: string }; children?: ReactNode }) {
   return (
     <div className="rounded-2xl border-2 border-dashed border-gray-300 bg-gray-50 px-6 py-10 text-center">
-      <p className="text-xs font-semibold tracking-[0.14em] text-gray-500">
-        {data.statusLabel}
-      </p>
+      <p className="text-xs font-semibold tracking-[0.14em] text-gray-500">{data.statusLabel}</p>
       <h2 className="mt-3 text-2xl font-bold text-gray-900">{data.title}</h2>
       <p className="mt-2 text-sm text-gray-600">{data.assignedGroup}</p>
       {children}
@@ -244,77 +1050,90 @@ export default function LandingPage() {
   }, []);
 
   const [data, setData] = useState(() => {
-    if (isPreviewMode) {
-      return loadLandingDraft() ?? mergeLandingWithOverrides(landingPageData);
-    }
-
+    if (isPreviewMode) return loadLandingDraft() ?? mergeLandingWithOverrides(landingPageData);
     return mergeLandingWithOverrides(landingPageData);
   });
 
   useEffect(() => {
     if (!isPreviewMode) return;
-
     const onStorage = (event: StorageEvent) => {
       if (event.key !== "landing-admin-draft") return;
       setData(loadLandingDraft() ?? mergeLandingWithOverrides(landingPageData));
     };
-
     window.addEventListener("storage", onStorage);
     return () => window.removeEventListener("storage", onStorage);
   }, [isPreviewMode]);
 
-  const { hero, sections } = data;
+  const { navbar, hero, sections } = data;
+
+  const scrollToPrograms = (e: React.MouseEvent) => {
+    e.preventDefault();
+    document.getElementById('programs-grid')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
-    <div className="min-h-screen bg-white">
-      <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <h1 className="font-extrabold tracking-wide text-lg">BULSU COE</h1>
-          <div className="flex items-center gap-2">
-            <Link
-              to="/admin"
-              className="rounded-full border border-gray-400 px-4 py-2 text-sm font-semibold text-gray-800 hover:bg-gray-50"
-            >
-              Landing Admin
-            </Link>
-            <Link
-              to="/departments"
-              className="rounded-full bg-[#a90000] px-5 py-2 text-sm font-semibold text-white hover:bg-[#8f0000]"
-            >
-              Department Pages
-            </Link>
-          </div>
+    <div className="min-h-screen bg-[#fbf8f4]">
+      <header className="sticky top-0 z-50 border-b border-[#ece7df] bg-white/90 backdrop-blur-xl">
+        <div className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
+          <Link to="/" className="shrink-0 rounded-full transition-transform duration-300 hover:scale-[1.03]">
+            <img src={navbar.logoSrc} alt={navbar.logoAlt} className="h-12 w-12 object-contain sm:h-14 sm:w-14" />
+          </Link>
+          <nav className="hidden flex-1 items-center justify-center md:flex">
+            <ul className="flex items-center gap-10 text-[15px] font-medium text-[#8f8b84]">
+              {navbar.links.map((link) => (
+                <li key={link.label}>
+                  {link.label === "Department" || link.label === "Departments" || link.label === "Programs" ? (
+                     <a href="#programs-grid" onClick={scrollToPrograms} className="transition-colors duration-200 hover:text-[#202020] cursor-pointer">{link.label}</a>
+                  ) : link.isRoute ? (
+                    <Link to={link.href} className="transition-colors duration-200 hover:text-[#202020]">{link.label}</Link>
+                  ) : (
+                    <a href={link.href} className={`transition-colors duration-200 hover:text-[#202020] ${link.label === "Home" ? "font-semibold text-[#202020]" : ""}`}>{link.label}</a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <a href={navbar.contactHref} className="inline-flex shrink-0 items-center justify-center rounded-full bg-[#b52a16] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_10px_20px_rgba(181,42,22,0.22)] transition-colors duration-200 hover:bg-[#992211] sm:px-8">{navbar.contactLabel}</a>
         </div>
       </header>
-
       <main>
-        <section id="hero" className="max-w-6xl mx-auto px-6 py-16 md:py-20">
-          <div className="rounded-3xl bg-gradient-to-r from-[#f4efe3] via-[#ead9b5] to-[#d6b26f] p-8 md:p-12">
-            <p className="text-xs font-semibold tracking-[0.14em] text-[#6f4d12]">
-              {hero.eyebrow}
-            </p>
-            <h2 className="mt-4 text-3xl md:text-5xl font-black leading-tight text-[#2a1d0b] whitespace-pre-line">
-              {hero.title}
-            </h2>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                to={hero.primaryButtonHref}
-                className="rounded-full bg-[#2a1d0b] px-5 py-2 text-sm font-semibold text-white hover:bg-black"
-              >
-                {hero.primaryButtonLabel}
-              </Link>
+        <section id="hero" className="mx-auto max-w-6xl px-4 py-10 sm:px-6 md:py-14">
+          <div className="overflow-hidden rounded-[2rem] border border-[#ece7df] bg-white p-4 shadow-[0_25px_80px_rgba(15,23,42,0.08)] sm:p-5 md:p-6">
+            <div className="relative overflow-hidden rounded-[1.75rem] bg-[#080606]">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_28%_40%,rgba(167,18,0,0.48),transparent_30%),radial-gradient(circle_at_48%_94%,rgba(255,123,63,0.4),transparent_28%),linear-gradient(125deg,rgba(7,7,7,0.96),rgba(16,9,8,0.88)_45%,rgba(3,3,3,0.98))]" />
+              <div className="absolute inset-y-0 left-[-8%] w-[52%] bg-contain bg-left bg-no-repeat opacity-[0.18]" style={{ backgroundImage: `url('${hero.leftWatermarkSrc}')` }} />
+              <div className="absolute inset-y-0 right-[-6%] w-[44%] bg-contain bg-right bg-no-repeat opacity-[0.12]" style={{ backgroundImage: `url('${hero.rightWatermarkSrc}')`, transform: "scaleX(-1) rotate(12deg)" }} />
+              <div className="relative z-10 flex min-h-[26rem] flex-col items-center justify-center px-6 py-16 text-center md:min-h-[28rem] md:px-16">
+                <p className="text-sm font-semibold tracking-[0.12em] text-white/80 md:text-base">{hero.eyebrow}</p>
+                <h2 className="mt-5 max-w-[8ch] whitespace-pre-line text-5xl font-black leading-[0.93] text-white sm:text-6xl md:text-7xl">{hero.title}</h2>
+                <div className="mt-9">
+                  <Link to="#programs-grid" onClick={scrollToPrograms} className="inline-flex items-center justify-center rounded-full border-[5px] border-[#8c95c6] bg-[#ef8f33] px-8 py-3.5 text-lg font-semibold text-white shadow-[0_14px_30px_rgba(239,143,51,0.35)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#f39a44] sm:px-10">{hero.primaryButtonLabel}</Link>
+                </div>
+              </div>
+            </div>
+            <div className="grid gap-4 border-t border-[#f1ece4] px-2 py-6 sm:grid-cols-2 lg:grid-cols-4 lg:px-6">
+              {hero.stats.map((item) => {
+                const Icon = heroStatIcons[item.icon];
+                return (
+                  <div key={item.label} className="flex items-start gap-3 rounded-2xl px-3 py-1">
+                    <span className="mt-1 text-[#bcc1cf]"><Icon className="h-5 w-5" strokeWidth={1.8} /></span>
+                    <div>
+                      <p className="text-[1.75rem] font-bold leading-none text-[#252525]">{item.value}</p>
+                      <p className="mt-2 text-sm text-[#8d8d93]">{item.label}</p>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>
-
         <MissionVisionSection data={sections.missionVision} />
-        <DepartmentGridSection data={sections.departmentGrid} />
+        <DepartmentGrid />
         <NewsSection data={sections.news} />
         <FacilitiesSection data={sections.facilities} />
         <StatisticsSection data={sections.statistics} />
         <ContactSection data={sections.contact} />
       </main>
-
       <LandingFooterSection data={sections.footer} />
     </div>
   );

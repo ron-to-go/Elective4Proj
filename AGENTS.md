@@ -67,6 +67,8 @@ Allowed files:
 - `src/Pages/departments/<CODE>.tsx`
 - `src/Pages/admin/<CODE>Admin.tsx`
 - `src/data/department/<CODE>.ts`
+- `src/components/<CODE>.tsx`
+- `src/assets/<CODE>.svg`
 
 ## Allow new CODE-specific pages/components/styles/assets:
 - `src/Pages/departments/<CODE>*.tsx`

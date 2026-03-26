@@ -1,2 +1,93 @@
 /* Department-scoped custom CSS for EE page. */
 
+#so-icon {
+  filter: invert(100%)
+}
+#careers .card, #so .card {
+  border: 1px solid #ccc;
+}
+
+.card:hover #so-icon, .card:hover #so-icon-id {
+  filter: invert(0%);
+  background-color: white;
+}
+
+#careers .card:hover, #so .card:hover {
+  
+  background-color:  #7F1D1D;
+  transform: translateY(-4px);
+  border: none;
+  box-shadow: 
+  0 12px 20px rgba(0, 0, 0, 0.2),
+  0 0 10px rgba(127, 29, 29, 0.5),
+  0 0 20px rgba(127, 29, 29, 0.4),
+  0 0 30px rgba(127, 29, 29, 0.3); 
+}
+
+#careers .card:hover p, #careers .card:hover h4, #so .card:hover #so-title, #so .card:hover #so-text {
+  color: white;
+}
+
+#careers .card, #so .card {
+   transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+#careers .card:hover::after,
+#so .card:hover::after {
+  background: #7F1D1D;
+}
+
+@keyframes logo-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.animate-logo-float {
+  animation: logo-float 6s ease-in-out infinite;
+}
+
+@keyframes border-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.peo-card-racing {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  background: white;
+}
+
+.peo-card-racing::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    transparent 75%,
+    #a90000 100% 
+  );
+  z-index: -2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.peo-card-racing::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: white;
+  border-radius: calc(1rem - 2px);
+  z-index: -1;
+}
+
+.peo-card-racing:hover::before {
+  opacity: 1;
+  animation: border-rotate 2s linear infinite;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #d6bebe transparent;
+}

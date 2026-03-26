@@ -1,2 +1,110 @@
 /* Department-scoped custom CSS for CE page. */
 
+:root {
+  --primary-navy: #1F3A4D;
+  --primary-gold: #D4AF37;
+  --gold-hover: #F2D94E;
+
+  --white: #FFFFFF;
+  --light-gray: #F5F5F5;
+  --medium-gray: #7A7A7A;
+  --dark-text: #2B2B2B;
+
+  --accent-blue: #4A90E2;
+  --accent-green: #4CAF50;
+  --accent-brown: #8B5A2B;
+}
+
+.ce-bg-navy { background-color: var(--primary-navy); }
+.ce-text-navy { color: var(--primary-navy); }
+.ce-bg-gold { background-color: var(--primary-gold); }
+.ce-text-gold { color: var(--primary-gold); }
+.ce-bg-light { background-color: var(--light-gray); }
+.ce-text-dark { color: var(--dark-text); }
+.ce-border-gold { border-color: var(--primary-gold); }
+
+.ce-button-gold {
+  background-color: var(--primary-gold);
+  color: var(--white);
+  transition: background-color 0.2s;
+}
+
+.ce-button-gold:hover {
+  background-color: var(--gold-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(212, 175, 55, 0.3);
+}
+
+.ce-card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ce-card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-color: var(--primary-gold);
+}
+
+.ce-image-zoom {
+  transition: transform 0.5s ease;
+}
+
+.ce-image-zoom:hover {
+  transform: scale(1.05);
+}
+
+.ce-nav-link {
+  position: relative;
+}
+
+.ce-nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--primary-gold);
+  transition: width 0.3s ease;
+}
+
+.ce-nav-link:hover::after {
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.ce-animate-fade-in { animation: fadeIn 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
+.ce-animate-slide-left { animation: slideInLeft 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
+.ce-animate-slide-right { animation: slideInRight 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
+.ce-animate-scale-in { animation: scaleIn 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; opacity: 0; }
+
+.ce-delay-1 { animation-delay: 0.1s; }
+.ce-delay-2 { animation-delay: 0.2s; }
+.ce-delay-3 { animation-delay: 0.3s; }
+.ce-delay-4 { animation-delay: 0.4s; }
+.ce-delay-5 { animation-delay: 0.5s; }
+.ce-delay-6 { animation-delay: 0.6s; }
+.ce-delay-7 { animation-delay: 0.7s; }
+.ce-delay-8 { animation-delay: 0.8s; }
+.ce-delay-9 { animation-delay: 0.9s; }
+.ce-delay-10 { animation-delay: 1.0s; }
+

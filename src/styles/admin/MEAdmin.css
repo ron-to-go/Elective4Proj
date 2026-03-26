@@ -1,0 +1,501 @@
+.me-admin {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(123, 17, 19, 0.08), transparent 24rem),
+    linear-gradient(180deg, #f7f2ea 0%, #f2f4f8 100%);
+  color: #253041;
+  font-size: 1rem;
+}
+
+.me-admin,
+.me-admin *,
+.me-admin *::before,
+.me-admin *::after {
+  box-sizing: border-box;
+}
+
+.me-admin button,
+.me-admin input,
+.me-admin textarea,
+.me-admin select {
+  font: inherit;
+}
+
+.me-admin__layout {
+  width: min(1200px, calc(100% - 1rem));
+  margin: 0 auto;
+  padding: 1rem 0 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.me-admin__panel {
+  border-radius: 1.25rem;
+  border: 1px solid rgba(93, 104, 120, 0.14);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 16px 42px rgba(25, 34, 48, 0.08);
+  padding: 1rem;
+}
+
+.me-admin__eyebrow,
+.me-admin__step,
+.me-admin__editor-badge,
+.me-admin__image-key {
+  margin: 0;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #7b1113;
+}
+
+.me-admin__step {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.85rem;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(123, 17, 19, 0.08);
+}
+
+.me-admin__title {
+  margin: 0.35rem 0 0;
+  font-size: clamp(1.9rem, 3.4vw, 2.5rem);
+  line-height: 1.04;
+  font-weight: 900;
+  color: #1f2937;
+}
+
+.me-admin__section-title,
+.me-admin__editor-title,
+.me-admin__image-title {
+  margin: 0.35rem 0 0;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  font-weight: 800;
+  color: #1f2937;
+}
+
+.me-admin__copy,
+.me-admin__meta,
+.me-admin__section-copy,
+.me-admin__tip-copy,
+.me-admin__workspace-copy,
+.me-admin__section-button-copy,
+.me-admin__preview-copy,
+.me-admin__editor-help,
+.me-admin__image-copy,
+.me-admin__image-value,
+.me-admin__status,
+.me-admin__error {
+  margin: 0.55rem 0 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #5c6978;
+}
+
+.me-admin__meta {
+  max-width: 42rem;
+  font-size: 0.95rem;
+}
+
+.me-admin__tip-grid,
+.me-admin__workspace-grid,
+.me-admin__image-grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.me-admin__tip-grid {
+  margin-top: 1rem;
+}
+
+.me-admin__tip-card {
+  border-radius: 1rem;
+  border: 1px solid rgba(93, 104, 120, 0.12);
+  background: linear-gradient(180deg, rgba(248, 244, 239, 0.94), rgba(255, 255, 255, 0.98));
+  padding: 0.95rem;
+}
+
+.me-admin__actions,
+.me-admin__toolbar,
+.me-admin__preview-actions,
+.me-admin__page-switcher,
+.me-admin__viewport-switcher,
+.me-admin__json-actions,
+.me-admin__image-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.me-admin__actions {
+  margin-top: 1rem;
+}
+
+.me-admin__pill,
+.me-admin__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.65rem;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(123, 17, 19, 0.14);
+  background: #fff;
+  color: #4b5563;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.me-admin__pill:hover,
+.me-admin__pill:focus-visible,
+.me-admin__button:hover,
+.me-admin__button:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(30, 41, 59, 0.08);
+  outline: none;
+}
+
+.me-admin__pill--active,
+.me-admin__button--primary {
+  border-color: #7b1113;
+  background: #7b1113;
+  color: #fff;
+}
+
+.me-admin__button--ghost {
+  background: #fff;
+  color: #374151;
+}
+
+.me-admin__status,
+.me-admin__error {
+  padding-top: 0.2rem;
+}
+
+.me-admin__status {
+  color: #0f766e;
+}
+
+.me-admin__error {
+  color: #b91c1c;
+}
+
+.me-admin__workspace-grid {
+  margin-top: 1rem;
+}
+
+.me-admin__workspace-button {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(93, 104, 120, 0.14);
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.me-admin__workspace-button:hover,
+.me-admin__workspace-button:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(30, 41, 59, 0.08);
+  outline: none;
+}
+
+.me-admin__workspace-button--active {
+  border-color: rgba(123, 17, 19, 0.28);
+  background: rgba(123, 17, 19, 0.06);
+}
+
+.me-admin__workspace-label,
+.me-admin__section-button-label,
+.me-admin__preview-title {
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.35;
+  color: #1f2937;
+}
+
+.me-admin__preview-actions {
+  margin-top: 1rem;
+}
+
+.me-admin__page-switcher {
+  margin-top: 1rem;
+}
+
+.me-admin__preview-note {
+  margin-top: 0.85rem;
+  padding: 0.95rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(93, 104, 120, 0.12);
+  background: linear-gradient(180deg, rgba(247, 242, 234, 0.94), rgba(255, 255, 255, 0.98));
+}
+
+.me-admin__preview-copy {
+  margin-top: 0.3rem;
+}
+
+.me-admin__preview-steps {
+  margin: 0.8rem 0 0;
+  padding-left: 1.2rem;
+  color: #475467;
+  line-height: 1.65;
+}
+
+.me-admin__embedded-preview {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(93, 104, 120, 0.12);
+}
+
+.me-admin__viewport-switcher {
+  margin-bottom: 0.85rem;
+}
+
+.me-admin__preview-stage {
+  overflow: auto;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(93, 104, 120, 0.12);
+  background:
+    linear-gradient(180deg, rgba(226, 232, 240, 0.62), rgba(255, 255, 255, 0.95)),
+    repeating-linear-gradient(
+      45deg,
+      rgba(148, 163, 184, 0.08),
+      rgba(148, 163, 184, 0.08) 12px,
+      transparent 12px,
+      transparent 24px
+    );
+}
+
+.me-admin__preview-frame {
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid rgba(93, 104, 120, 0.18);
+  background: #fff;
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.14);
+}
+
+.me-admin__iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  background: #fff;
+}
+
+.me-admin__editor-layout {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.me-admin__section-list {
+  display: grid;
+  gap: 0.55rem;
+  align-content: start;
+}
+
+.me-admin__section-button {
+  display: grid;
+  gap: 0.25rem;
+  padding: 0.9rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(93, 104, 120, 0.14);
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.me-admin__section-button:hover,
+.me-admin__section-button:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 18px rgba(30, 41, 59, 0.08);
+  outline: none;
+}
+
+.me-admin__section-button--active {
+  border-color: rgba(123, 17, 19, 0.28);
+  background: rgba(123, 17, 19, 0.06);
+}
+
+.me-admin__section-button-copy {
+  margin: 0;
+  font-size: 0.94rem;
+}
+
+.me-admin__editor-card,
+.me-admin__image-card {
+  border-radius: 1rem;
+  border: 1px solid rgba(93, 104, 120, 0.12);
+  background: linear-gradient(180deg, rgba(250, 248, 245, 0.82), rgba(255, 255, 255, 0.98));
+  padding: 1rem;
+}
+
+.me-admin__editor-help {
+  max-width: 42rem;
+}
+
+.me-admin__editor-shell {
+  margin-top: 1rem;
+}
+
+.me-admin__editor-shell .text-sm,
+.me-admin__editor-shell summary,
+.me-admin__editor-shell label,
+.me-admin__editor-shell input,
+.me-admin__editor-shell textarea,
+.me-admin__editor-shell button {
+  font-size: 1rem;
+}
+
+.me-admin__editor-shell details,
+.me-admin__editor-shell .rounded-xl,
+.me-admin__editor-shell .rounded-lg {
+  border-color: rgba(93, 104, 120, 0.16);
+  background: #fff;
+}
+
+.me-admin__editor-shell details {
+  border-radius: 1rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.me-admin__editor-shell summary {
+  color: #1f2937;
+}
+
+.me-admin__editor-shell input:not([type="checkbox"]),
+.me-admin__editor-shell textarea {
+  width: 100%;
+  border: 1px solid rgba(93, 104, 120, 0.18);
+  border-radius: 0.8rem;
+  background: #fff;
+  color: #243041;
+  padding: 0.72rem 0.85rem;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.03);
+}
+
+.me-admin__editor-shell textarea {
+  min-height: 8rem;
+}
+
+.me-admin__editor-shell input:focus,
+.me-admin__editor-shell textarea:focus {
+  outline: 2px solid rgba(123, 17, 19, 0.18);
+  border-color: rgba(123, 17, 19, 0.26);
+}
+
+.me-admin__editor-shell button {
+  border-radius: 0.8rem;
+  border: 1px solid rgba(93, 104, 120, 0.16);
+  background: #fff;
+  color: #334155;
+}
+
+.me-admin__toolbar {
+  margin-top: 1rem;
+}
+
+.me-admin__json-editor {
+  display: grid;
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.me-admin__image-grid {
+  margin-top: 1rem;
+}
+
+.me-admin__image-copy {
+  margin-top: 0.35rem;
+  font-size: 0.95rem;
+}
+
+.me-admin__image-value {
+  padding: 0.75rem 0.85rem;
+  border-radius: 0.85rem;
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  background: rgba(241, 245, 249, 0.85);
+  font-size: 0.92rem;
+  word-break: break-word;
+}
+
+.me-admin__textarea {
+  width: 100%;
+  min-height: 26rem;
+  resize: vertical;
+  border-radius: 1rem;
+  border: 1px solid rgba(93, 104, 120, 0.16);
+  background: #f8fafc;
+  color: #1f2937;
+  padding: 0.95rem;
+  font:
+    500 0.95rem/1.6 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    "Courier New",
+    monospace;
+}
+
+.me-admin__textarea:focus {
+  outline: 2px solid rgba(123, 17, 19, 0.18);
+  border-color: rgba(123, 17, 19, 0.28);
+}
+
+@media (min-width: 720px) {
+  .me-admin__layout {
+    width: min(1220px, calc(100% - 1.5rem));
+    padding-top: 1.25rem;
+  }
+
+  .me-admin__tip-grid,
+  .me-admin__workspace-grid,
+  .me-admin__image-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 980px) {
+  .me-admin__tip-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .me-admin__workspace-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .me-admin__editor-layout {
+    grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .me-admin__section-list {
+    position: sticky;
+    top: 1rem;
+  }
+}
