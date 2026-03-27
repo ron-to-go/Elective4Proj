@@ -1,6 +1,6 @@
 /* Department-scoped custom CSS for CE page. */
 
-:root 
+:root {
   --primary-navy: #1F3A4D;
   --primary-gold: #D4AF37;
   --gold-hover: #F2D94E;
