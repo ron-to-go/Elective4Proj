@@ -67,7 +67,7 @@ export default function IEPage() {
           <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
         </span>
         CPE DEPARTMENT
-      </div>
+      <div>
       <h1 className="text-5xl md:text-6xl font-black tracking-tighter text-gray-900 leading-[1.1]">
         {dept.title.split(' ')[0]} <br/>
         <span className="text-[#16a34a]">{dept.title.split(' ').slice(1).join(' ')}</span>
