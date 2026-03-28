@@ -1,3 +1,7 @@
+# PLEASE MAKE SURE TO BE IN A BRANCH OR CREATE ONE WHEN TRYING CI/CD TO SEE THE ERROR LOGS IN THE PULL REQUESTS
+
+
+
 # BULSU COE Web Engineering Project
 
 Multi-group collaboration website with:
