@@ -136,10 +136,16 @@ jobs:
   deploy-vercel:
     name: Deploy to Vercel
     needs: ci
-    if: github.event_name != 'pull_request' && secrets.VERCEL_DEPLOY_HOOK_URL != ''
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Vercel Deploy Hook
-        run: curl -fsS -X POST "$VERCEL_DEPLOY_HOOK_URL"
+        run: |
+          if [ -z "$VERCEL_DEPLOY_HOOK_URL" ]; then
+            echo "VERCEL_DEPLOY_HOOK_URL is not set. Skipping deploy hook trigger."
+            exit 0
+          fi
+
+          curl -fsS -X POST "$VERCEL_DEPLOY_HOOK_URL"
         env:
           VERCEL_DEPLOY_HOOK_URL: ${{ secrets.VERCEL_DEPLOY_HOOK_URL }}
