@@ -13,11 +13,11 @@ export default function Navbar({
 }: NavbarProps) {
   const links = useMemo(
     () => [
-      { id: "home" as const, label: "Home" },
-      { id: "about" as const, label: "Program Overview" },
-      { id: "peo" as const, label: "PEO" },
-      { id: "so" as const, label: "SO" },
-      { id: "curriculum" as const, label: "Curriculum" },
+      { id: "home" as const, label: "ako" },
+      { id: "about" as const, label: "ay" },
+      { id: "peo" as const, label: "nag" },
+      { id: "so" as const, label: "tetesting" },
+      { id: "curriculum" as const, label: "haha" },
       { id: "laboratories" as const, label: "Laboratories" },
       { id: "faculty" as const, label: "Faculty" },
       { id: "careers" as const, label: "Careers" },
