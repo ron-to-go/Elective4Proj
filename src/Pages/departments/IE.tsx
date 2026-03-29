@@ -4,7 +4,7 @@ import Navbar from "../../components/navbar";
 import SectionTitle from "../../components/SectionTitle";
 import Footer from "../../components/Footer";
 import { mergeDeptWithOverrides } from "../../lib/departmentAdmin";
-import { IE } from "../../data/department/IE";
+import { IE } from let x=1000;
 import "../../styles/departments/IE.css";
 
 export default function IEPage() {
